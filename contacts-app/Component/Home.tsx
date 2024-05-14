@@ -12,15 +12,14 @@ import createContact, { IContact } from "../contacts";
 import GlobalContext from "../Context";
 import Contact from "./Contact";
 import { styles } from "../styles";
-import AddForm from "./AddForm";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let currentSortStage = 0;
 
 function ContactList() {
   const [contacts, setContacts] = useState<IContact[]>([]);
-  const [displaySort, setDisplaySort] = useState<IContact[]>([]);
-  const [displaylist, setDisplaylist] = useState(true);
+  const [displaylist, setDisplaylist] = useState<IContact[]>([]);
+  const [isDisplaylist, setIsDisplaylist] = useState(true);
   const [search, setSearch] = useState("");
 
   useEffect(() => {
@@ -42,7 +41,7 @@ function ContactList() {
   }, []);
 
   useEffect(() => {
-    setDisplaySort(contacts);
+    setDisplaylist(contacts);
   }, [contacts]);
 
   const handleSortAscByName = () => {
@@ -51,7 +50,7 @@ function ContactList() {
       if (a.name > b.name) return 1;
       return 0;
     });
-    setDisplaySort(result);
+    setDisplaylist(result);
   };
 
   const handleSortDesByName = () => {
@@ -60,7 +59,7 @@ function ContactList() {
       if (a.name > b.name) return -1;
       return 0;
     });
-    setDisplaySort(result);
+    setDisplaylist(result);
   };
 
   const handleSortToggle = () => {
@@ -74,7 +73,7 @@ function ContactList() {
         currentSortStage = 2;
         break;
       case 2:
-        setDisplaySort(contacts);
+        setDisplaylist(contacts);
         currentSortStage = 0;
         break;
       default:
@@ -83,15 +82,20 @@ function ContactList() {
   };
 
   const handleSearch = () => {
-    console.log("Searching.");
+    console.log("Searching:", search);
+    const searchingContact = search.trim().toLowerCase();
+    const results = contacts.filter((contact) =>
+      contact.name.toLowerCase().startsWith(searchingContact)
+    );
+    setDisplaylist(results);
   };
 
   return (
     <GlobalContext.Provider value={{ contacts, setContacts }}>
       <SafeAreaView style={styles.container}>
-        {displaylist && (
+        {isDisplaylist && (
           <FlatList
-            data={displaySort}
+            data={displaylist}
             renderItem={({ item }) => <Contact contact={item} />}
             keyExtractor={(item) => item.id}
           />
@@ -100,13 +104,17 @@ function ContactList() {
       <View>
         <Button
           title="Show List"
-          onPress={() => setDisplaylist(!displaylist)}
+          onPress={() => setIsDisplaylist(!isDisplaylist)}
         />
         <Button title="Sort ↕" onPress={handleSortToggle} />
       </View>
       <View>
-        <TextInput />
-        <Button title="Search " onPress={handleSearch} />
+        <TextInput
+          placeholder="Search Contact"
+          style={{ textAlign: "center", fontSize: 18 }}
+          onChangeText={(search: string) => setSearch(search)}
+        />
+        {search && <Button title="Search " onPress={handleSearch} />}
       </View>
     </GlobalContext.Provider>
   );

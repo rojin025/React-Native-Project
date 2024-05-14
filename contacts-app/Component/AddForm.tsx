@@ -13,9 +13,10 @@ const initalContact = {
   phone: "",
   id: "",
 };
+
 function AddForm() {
-  const [contact, setContact] = useState<IContact>(initalContact);
   const { setContacts, contacts } = useContext(GlobalContext);
+  const [contact, setContact] = useState<IContact>(initalContact);
 
   const handleNameInput = (text: string) => {
     setContact({ ...contact, name: text });
@@ -46,11 +47,13 @@ function AddForm() {
       const newContacts = [...contacts, newContact];
       setContacts(newContacts);
 
+      console.log("Contact Here : ", newContact);
       await AsyncStorage.setItem("ws-3", JSON.stringify(newContacts));
-      console.log(newContacts);
+      console.log(contacts);
 
+      console.log("New Contacts: ", contacts);
+      console.log("Contacts: ", contacts);
       setContact(initalContact);
-      console.log(contact);
     } catch (error) {
       console.log(error);
     }
