@@ -88,6 +88,7 @@ function ContactList() {
       contact.name.toLowerCase().startsWith(searchingContact)
     );
     setDisplaylist(results);
+    // setSearch("");
   };
 
   return (
