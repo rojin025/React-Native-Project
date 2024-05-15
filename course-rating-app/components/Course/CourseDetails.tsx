@@ -17,7 +17,7 @@ const CourseDetails = ({ route }: props) => {
   const navigation = useNavigation();
 
   const navToAddReview = () => {
-    navigation.navigate("addReview");
+    navigation.navigate("addReview", { code });
   };
 
   return (

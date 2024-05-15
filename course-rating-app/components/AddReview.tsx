@@ -1,19 +1,75 @@
+import { useContext, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
-import StarRating from "./StarRating";
 
-const AddReview = () => {
+import GlobalContext from "../Context";
+import StarRating from "./StarRating";
+import { Review } from "./ICourse";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
+const initialReview = {
+  name: "",
+  rating: 0,
+  comment: "",
+};
+
+const AddReview = ({ route }: any) => {
+  const { courses, setCourses } = useContext(GlobalContext);
+  const code = route.params;
+  const [review, setReview] = useState<Review>(initialReview);
+
+  const addNewReview = async () => {
+    console.log("Course Code is ", code);
+    console.log(review);
+
+    const courseIndex = courses.findIndex((c) => c.code === code);
+    if (courseIndex === -1) {
+      console.log("Course Code not found.");
+      return;
+      // throw new Error("Error Adding New Review.");
+    }
+    try {
+      courses[courseIndex].reviews.push(review);
+      courses[courseIndex].rating = calculateAverageRating(
+        courses[courseIndex].reviews
+      );
+
+      await AsyncStorage.setItem("course-app", JSON.stringify(courses));
+      console.log("New review added and courses updated in AsyncStorage.");
+    } catch (error) {
+      console.error("Error saving courses to AsyncStorage:", error);
+    }
+  };
+
+  const calculateAverageRating = (reviews: Review[]): number => {
+    const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+    return reviews.length ? totalRating / reviews.length : 0;
+  };
+
+  const handleNameChange = (text: string) => {
+    setReview({ ...review, name: text });
+  };
+
+  const handleCommentChange = (text: string) => {
+    setReview({ ...review, comment: text });
+  };
+
   return (
     <View>
       <Text style={styles.headerText}> Add Review </Text>
-      <TextInput style={styles.input} placeholder="Enter Name:" />
+      <TextInput
+        style={styles.input}
+        placeholder="Enter Name:"
+        onChangeText={handleNameChange}
+      />
       <Text style={styles.ratingText}> Your Rating </Text>
-      <StarRating />
+      <StarRating onSelect={setReview} review={review} />
       <TextInput
         style={[styles.input, { height: 200 }]}
         multiline={true}
         placeholder="Enter Comments:"
+        onChangeText={handleCommentChange}
       />
-      <Pressable style={styles.submitButton}>
+      <Pressable style={styles.submitButton} onPress={addNewReview}>
         <Text style={styles.submitButtonText}>Submit Review</Text>
       </Pressable>
     </View>

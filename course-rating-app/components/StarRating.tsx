@@ -1,6 +1,7 @@
 import { AntDesign } from "@expo/vector-icons";
 import { useState } from "react";
 import { StyleSheet, Pressable, View } from "react-native";
+import { Review } from "./ICourse";
 
 interface props {
   value: number;
@@ -16,11 +17,17 @@ function StarButton({ value, isSelected, onPress }: props) {
   );
 }
 
-function StarRating() {
+interface props {
+  review: Review;
+  onSelect: (review: Review) => void;
+}
+
+function StarRating({ review, onSelect }: props) {
   const [rating, setRating] = useState(0);
 
   const handlePress = (value: number) => {
     setRating(value);
+    onSelect({ ...review, rating: value });
   };
 
   return (
