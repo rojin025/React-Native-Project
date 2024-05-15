@@ -1,9 +1,9 @@
 import React from "react";
 
 import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
-import ICourse from "./ICourse";
+import ICourse from "../ICourse";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import Stars from "./Stars";
+import Stars from "../Stars";
 
 interface props {
   data: ICourse;

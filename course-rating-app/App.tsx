@@ -1,19 +1,38 @@
-import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet } from "react-native";
 import Constants from "expo-constants";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { MaterialCommunityIcons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import ICourse from "./components/ICourse";
 import GlobalContext from "./Context";
-import Home from "./components/Home";
+import HomeScreen from "./components/HomeScreen";
 import About from "./components/About";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+
 import Data from "./Data";
 
 export default function App() {
-  const data: ICourse[] = Data;
-  const [courses, setCourses] = useState<ICourse[]>(data);
+  const courseData: ICourse[] = Data;
+  const [courses, setCourses] = useState<ICourse[]>([]);
+
+  useEffect(() => {
+    const loadCourses = async () => {
+      try {
+        const data = await AsyncStorage.getItem("course-app");
+        if (data) {
+          const arr = JSON.parse(data);
+          setCourses(arr);
+        } else {
+          setCourses(courseData);
+        }
+      } catch (error) {
+        console.log("Error Loading data: ", error);
+      }
+    };
+    loadCourses();
+  }, [courses]);
 
   const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -23,7 +42,7 @@ export default function App() {
         <Navigator screenOptions={{ headerShown: false }}>
           <Screen
             name="Courses"
-            component={Home}
+            component={HomeScreen}
             options={{
               title: "Course",
               tabBarIcon: ({ color }) => (

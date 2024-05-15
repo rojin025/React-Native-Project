@@ -1,9 +1,9 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CoursesList from "./CoursesList";
-import CourseDetails from "./CourseDetails";
+import CoursesList from "./Course/CoursesList";
+import CourseDetails from "./Course/CourseDetails";
 import AddReview from "./AddReview";
 
-function Home() {
+function HomeScreen() {
   const { Navigator, Screen } = createNativeStackNavigator();
 
   return (
@@ -15,4 +15,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default HomeScreen;

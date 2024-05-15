@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableHighlight } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
-import Stars from "./Stars";
-import ICourse from "./ICourse";
+import Stars from "../Stars";
+import ICourse from "../ICourse";
 import CourseDetails from "./CourseDetails";
 
 interface CourseProps {
@@ -18,7 +18,6 @@ const Course = ({ data, index }: CourseProps) => {
 
   const infoPressed = () => {
     navigation.navigate("Course Details", { data });
-    // <CourseDetails  />;
   };
 
   return (
