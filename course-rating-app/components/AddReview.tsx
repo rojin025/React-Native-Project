@@ -14,7 +14,7 @@ const initialReview = {
 
 const AddReview = ({ route }: any) => {
   const { courses, setCourses } = useContext(GlobalContext);
-  const code = route.params;
+  const { code } = route.params;
   const [review, setReview] = useState<Review>(initialReview);
 
   const addNewReview = async () => {
@@ -27,6 +27,7 @@ const AddReview = ({ route }: any) => {
       return;
       // throw new Error("Error Adding New Review.");
     }
+
     try {
       courses[courseIndex].reviews.push(review);
       courses[courseIndex].rating = calculateAverageRating(
@@ -35,6 +36,7 @@ const AddReview = ({ route }: any) => {
 
       await AsyncStorage.setItem("course-app", JSON.stringify(courses));
       console.log("New review added and courses updated in AsyncStorage.");
+      // console.log("Course is :", courses[courseIndex]);
     } catch (error) {
       console.error("Error saving courses to AsyncStorage:", error);
     }
