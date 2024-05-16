@@ -1,9 +1,9 @@
 import { useContext, useState } from "react";
 import { Pressable, StyleSheet, Text, TextInput, View } from "react-native";
 
-import GlobalContext from "../Context";
-import StarRating from "./StarRating";
-import { Review } from "./ICourse";
+import GlobalContext from "../../Context";
+import StarRating from "../StarRating";
+import { Review } from "../ICourse";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 

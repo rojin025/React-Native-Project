@@ -4,6 +4,7 @@ import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
 import ICourse from "../ICourse";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import Stars from "../Stars";
+import ReviewList from "../Reviews/ReviewList";
 
 interface props {
   data: ICourse;
@@ -12,7 +13,7 @@ interface props {
 
 const CourseDetails = ({ route }: props) => {
   const { data } = route.params;
-  const { title, faculty, code, rating } = data;
+  const { title, faculty, code, reviews, rating } = data;
 
   const navigation = useNavigation();
 
@@ -28,6 +29,8 @@ const CourseDetails = ({ route }: props) => {
       <Text style={styles.stars}>
         <Stars rating={rating} />
       </Text>
+      <ReviewList data={reviews} />
+
       <TouchableHighlight style={styles.button}>
         <Text style={styles.buttonText} onPress={navToAddReview}>
           Add Review

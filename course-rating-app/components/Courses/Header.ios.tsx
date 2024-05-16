@@ -1,8 +1,7 @@
 import React from "react";
-import { Text, View, Image, StyleSheet, Platform } from "react-native";
+import { Text, View, Image, Platform } from "react-native";
 
-import HeaderStyle from "../styles/HeaderStyle";
-// import CourseImage from "../images/course.png";
+import HeaderStyle from "../../styles/HeaderStyle";
 
 const Header = () => {
   return (
@@ -12,7 +11,7 @@ const Header = () => {
         { alignItems: "center", justifyContent: "center" },
       ]}
     >
-      <Image source={require("../images/course.png")} />
+      <Image source={require("../../images/course.png")} />
       <Text> Course</Text>
     </View>
   );

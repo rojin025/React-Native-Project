@@ -10,7 +10,7 @@ import {
 } from "react-native";
 
 import Course from "./Course";
-import Header from "../Header.ios";
+import Header from "./Header.ios";
 import ICourse from "../ICourse";
 import GlobalContext from "../../Context";
 
