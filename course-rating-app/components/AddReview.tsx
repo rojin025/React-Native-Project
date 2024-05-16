@@ -5,6 +5,7 @@ import GlobalContext from "../Context";
 import StarRating from "./StarRating";
 import { Review } from "./ICourse";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useNavigation } from "@react-navigation/native";
 
 const initialReview = {
   name: "",
@@ -16,16 +17,13 @@ const AddReview = ({ route }: any) => {
   const { courses, setCourses } = useContext(GlobalContext);
   const { code } = route.params;
   const [review, setReview] = useState<Review>(initialReview);
+  const navigation = useNavigation();
 
   const addNewReview = async () => {
-    console.log("Course Code is ", code);
-    console.log(review);
-
     const courseIndex = courses.findIndex((c) => c.code === code);
     if (courseIndex === -1) {
       console.log("Course Code not found.");
       return;
-      // throw new Error("Error Adding New Review.");
     }
 
     try {
@@ -36,7 +34,7 @@ const AddReview = ({ route }: any) => {
 
       await AsyncStorage.setItem("course-app", JSON.stringify(courses));
       console.log("New review added and courses updated in AsyncStorage.");
-      // console.log("Course is :", courses[courseIndex]);
+      navigation.goBack();
     } catch (error) {
       console.error("Error saving courses to AsyncStorage:", error);
     }
@@ -44,7 +42,7 @@ const AddReview = ({ route }: any) => {
 
   const calculateAverageRating = (reviews: Review[]): number => {
     const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-    return reviews.length ? totalRating / reviews.length : 0;
+    return reviews.length ? Math.round(totalRating / reviews.length) : 0;
   };
 
   const handleNameChange = (text: string) => {

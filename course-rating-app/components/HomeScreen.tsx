@@ -1,6 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import CoursesList from "./Course/CoursesList";
-import CourseDetails from "./Course/CourseDetails";
+import CoursesList from "./Courses/CoursesList";
+import CourseDetails from "./Courses/CourseDetails";
 import AddReview from "./AddReview";
 
 function HomeScreen() {
