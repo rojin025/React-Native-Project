@@ -3,6 +3,8 @@ import { IReview } from "../ICourse";
 import React from "react";
 import Review from "./Review";
 
+import uuid from "uuid";
+
 interface props {
   data: IReview[];
 }
@@ -10,8 +12,12 @@ interface props {
 export default function ReviewList({ data }: props) {
   return (
     <View>
-      {data.map((review: IReview) => (
-        <Review review={review} />
+      {data.map((review: IReview, i) => (
+        <Review
+          review={review}
+          key={i + `${review.name}` + i + `${review.comment}`}
+        />
+        // <Review review={review} key={uuid.v1()} />
       ))}
     </View>
   );
