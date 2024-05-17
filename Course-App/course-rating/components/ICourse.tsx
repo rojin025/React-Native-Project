@@ -5,7 +5,7 @@ export interface IReview {
 }
 
 export default interface ICourse {
-  id: string;
+  id?: string;
   title: string;
   faculty: string;
   code: string;

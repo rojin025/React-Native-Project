@@ -10,8 +10,7 @@ import GlobalContext from "./Context";
 import HomeScreen from "./components/HomeScreen";
 import About from "./components/About";
 
-import axios from "axios";
-import { SERVER_BASE_URL } from "./Constant";
+import { getCourses } from "./api";
 
 export default function App() {
   const [courses, setCourses] = useState<ICourse[]>([]);
@@ -19,10 +18,7 @@ export default function App() {
   useEffect(() => {
     const loadCourses = async () => {
       try {
-        const res = await axios.get(`${SERVER_BASE_URL}courses`);
-        if (res.data && res.status === 200) {
-          setCourses(res.data);
-        }
+        setCourses(await getCourses());
       } catch (error) {
         console.log("Error Loading data: ", error);
       }

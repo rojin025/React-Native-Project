@@ -6,7 +6,7 @@ import axios from "axios";
 import GlobalContext from "../../Context";
 import StarRating from "../StarRating";
 import { IReview } from "../ICourse";
-import { SERVER_BASE_URL } from "../../Constant";
+import { SERVER_BASE_URL } from "../../api";
 
 const initialReview = {
   name: "",
