@@ -1,9 +1,13 @@
 import axios from "axios";
 import ICourse from "./components/ICourse";
 
+// export const SERVER_BASE_URL = "http://localhost:9000/";
 export const SERVER_BASE_URL = "http://localhost:9000/";
 
-axios.defaults.baseURL = "http://localhost:9000/";
+// before
+// axios.defaults.baseURL = "http://localhost:9000/";
+// after
+axios.defaults.baseURL = "http://10.200.30.248:9000/";
 
 export async function getCourses() {
   try {

@@ -53,6 +53,13 @@ const Course = ({ data, index }: CourseProps) => {
           >
             <Text style={styles.buttonText}> Edit </Text>
           </TouchableHighlight>
+          <TouchableHighlight
+            onPress={handleEdit}
+            style={styles.button}
+            underlayColor="Green"
+          >
+            <Text style={styles.buttonText}> Delete </Text>
+          </TouchableHighlight>
         </View>
       </View>
     </View>
