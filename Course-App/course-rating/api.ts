@@ -1,4 +1,5 @@
 import axios from "axios";
+import ICourse from "./components/ICourse";
 
 export const SERVER_BASE_URL = "http://localhost:9000/";
 
@@ -12,4 +13,28 @@ export async function getCourses() {
     console.log(error);
   }
   return [];
+}
+
+export async function createCourse(course: ICourse) {
+  try {
+    const res = await axios.post("/courses", course);
+    if (res.status === 201) {
+      return res.data;
+    }
+    return null;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function updateCourse(id: string, course: ICourse) {
+  try {
+    const res = await axios.post(`/courses/${id}`, course);
+    if (res.status === 200) {
+      return res.data;
+    }
+    return null;
+  } catch (error) {
+    console.log(error);
+  }
 }

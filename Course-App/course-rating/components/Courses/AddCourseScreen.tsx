@@ -1,7 +1,18 @@
-import { useNavigation } from "@react-navigation/native";
-import React, { useState } from "react";
-import { View, Text, Pressable, StyleSheet, TextInput } from "react-native";
+import React, { useContext, useState } from "react";
+import {
+  View,
+  Text,
+  Pressable,
+  StyleSheet,
+  TextInput,
+  Alert,
+} from "react-native";
+
 import ICourse from "../ICourse";
+import GlobalContext from "../../Context";
+import { createCourse } from "../../api";
+
+import styles from "./Course.Styles";
 
 const initialCourse = {
   title: "",
@@ -11,13 +22,22 @@ const initialCourse = {
   rating: 3,
 };
 
-function AddCourseScreen() {
-  const navigation = useNavigation();
+function AddCourseScreen({ navigation }: any) {
   const [course, setCourse] = useState<ICourse>(initialCourse);
+  const { courses, setCourses } = useContext(GlobalContext);
 
-  const handleAddCourse = () => {
-    console.log("New Course: ", course);
-    console.log("Add Button clicked.");
+  const handleAddCourse = async () => {
+    try {
+      const res = await createCourse(course);
+      if (res !== null) {
+        setCourses([...courses, res]);
+        navigation.goBack();
+      } else {
+        Alert.alert("Failed!!!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -47,36 +67,5 @@ function AddCourseScreen() {
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  button: {
-    paddingVertical: 10,
-    paddingHorizontal: 20,
-    backgroundColor: "#0066cc",
-    borderRadius: 4,
-    marginVertical: 10,
-    marginHorizontal: 20,
-  },
-  title: {
-    padding: 10,
-    marginVertical: 10,
-    marginHorizontal: 20,
-    fontSize: 24,
-  },
-  input: {
-    padding: 10,
-    marginVertical: 10,
-    marginHorizontal: 20,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 3,
-    fontSize: 24,
-  },
-  addButtonText: {
-    fontSize: 18,
-    color: "#ffffff",
-    textAlign: "center",
-  },
-});
 
 export default AddCourseScreen;

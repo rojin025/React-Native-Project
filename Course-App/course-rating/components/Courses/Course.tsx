@@ -21,8 +21,7 @@ const Course = ({ data, index }: CourseProps) => {
   };
 
   const handleEdit = () => {
-    // cl;
-    // navigation.navigate("Course Details", { data });
+    navigation.navigate("update-course", data);
   };
 
   return (
