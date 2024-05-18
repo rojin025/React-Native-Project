@@ -1,10 +1,8 @@
 import axios from "axios";
 
-import AuthorI from "../Types/types";
+import { AuthorI } from "../Types/Types";
 
-export const SERVER_BASE_URL = "http://localhost:9000/";
-
-// axios.defaults.baseURL = "http://10.200.30.248:9000/";
+axios.defaults.baseURL = "http://localhost:9000/";
 
 export async function getAuthors() {
   try {
@@ -28,7 +26,7 @@ export async function createAuthor(author: AuthorI) {
   }
 }
 
-export async function updateCourse(id: string, author: AuthorI) {
+export async function updateAuthor(id: string, author: AuthorI) {
   try {
     const res = await axios.post(`/Authors/${id}`, author);
     if (res.status === 200) {
