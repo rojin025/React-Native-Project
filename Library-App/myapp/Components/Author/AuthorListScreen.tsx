@@ -1,34 +1,15 @@
-import {
-  FlatList,
-  Pressable,
-  SafeAreaView,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { FlatList, Pressable, SafeAreaView, Text, View } from "react-native";
 
 import Styles from "../Styles";
-import { Header } from "react-native/Libraries/NewAppScreen";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { AuthorI } from "../../Types/Types";
-import { getAuthors } from "../../Services/author.api";
+
 import Author from "./Author";
 import AddAuthorScreen from "./AddAuthorScreen";
+import GlobalContext from "../../Utils/Context";
 
 function AuthorListScreen({ navigation }: any) {
-  const [authors, setAuthors] = useState<AuthorI[]>([]);
-
-  useEffect(() => {
-    try {
-      const loadData = async () => {
-        const data = await getAuthors();
-        setAuthors(data);
-      };
-      loadData();
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  const { authors, setAuthors } = useContext(GlobalContext);
 
   return (
     <SafeAreaView style={Styles.container}>

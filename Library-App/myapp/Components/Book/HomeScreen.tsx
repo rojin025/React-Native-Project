@@ -17,7 +17,7 @@ import AddBookButton from "./AddBookButton";
 
 import Styles from "../Styles";
 
-export default function BookListScreen({ navigation }: any) {
+export default function HomeScreen({ navigation }: any) {
   const { books } = useContext(GlobalContext);
   const [search, setSearch] = useState("");
   const [displayList, setDisplayList] = useState<BookI[]>([]);
@@ -32,12 +32,13 @@ export default function BookListScreen({ navigation }: any) {
       setDisplayList(filteredBooks);
     }
   }, [search, books]);
+
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        {/* <Header /> */}
-        <Text>Book Review</Text>
+        <Text style={Styles.title}>Books</Text>
         <TextInput
+          style={Styles.input}
           placeholder="Live Serach"
           value={search}
           onChangeText={(text: string) => setSearch(text)}

@@ -1,14 +1,18 @@
 import { createContext } from "react";
-import { BookI } from "../Types/Types";
+import { AuthorI, BookI } from "../Types/Types";
 
 interface ContextType {
   books: BookI[];
   setBooks: (books: BookI[]) => void;
+  authors: AuthorI[];
+  setAuthors: (authors: AuthorI[]) => void;
 }
 
 const initialContext = {
   books: [],
   setBooks: () => {},
+  authors: [],
+  setAuthors: () => {},
 };
 
 const GlobalContext = createContext<ContextType>(initialContext);

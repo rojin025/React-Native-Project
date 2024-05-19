@@ -1,13 +1,14 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-import BookListScreen from "./Book/BookListScreen";
+import BookListScreen from "./Book/HomeScreen";
 import BookDetailsScreen from "./Book/BookDetailsScreen";
 import AddBookScreen from "./Book/AddBookScreen";
 import UpdateBookScreen from "./Book/UpdateBookScreen";
 import AuthorListScreen from "./Author/AuthorListScreen";
 import AddAuthorScreen from "./Author/AddAuthorScreen";
+import UpdateAuthorScreen from "./Author/UpdateAuthorScreen";
 
-function HomeScreen() {
+function Home() {
   const { Navigator, Screen } = createNativeStackNavigator();
 
   return (
@@ -33,7 +34,15 @@ function HomeScreen() {
         name="add-author"
         component={AddAuthorScreen}
         options={{
-          title: "Authors",
+          title: "Add Author",
+          headerShown: false,
+        }}
+      />
+      <Screen
+        name="update-author"
+        component={UpdateAuthorScreen}
+        options={{
+          title: "Update Author",
           headerShown: false,
         }}
       />
@@ -41,4 +50,4 @@ function HomeScreen() {
   );
 }
 
-export default HomeScreen;
+export default Home;

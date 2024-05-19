@@ -37,3 +37,15 @@ export async function updateAuthor(id: string, author: AuthorI) {
     console.log(error);
   }
 }
+
+export async function deleteAuthor(id: string) {
+  try {
+    const res = await axios.delete(`authors/${id}`);
+    if (res.status === 200) {
+      return true;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  return false;
+}

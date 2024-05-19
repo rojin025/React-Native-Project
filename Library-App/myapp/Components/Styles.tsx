@@ -8,6 +8,38 @@ const Styles = StyleSheet.create({
     justifyContent: "center",
     alignContent: "center",
   },
+  containerList: {
+    // backgroundColor: index % 2 === 0 ? "white" : "lightgrey"
+  },
+  row: {
+    flexDirection: "row",
+    padding: 20,
+    borderBottomWidth: 1,
+    borderColor: "#ddd",
+  },
+
+  edges: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 5,
+    minWidth: 50,
+  },
+  stars: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    padding: 5,
+    minWidth: 50,
+  },
+  course: {
+    flexDirection: "column",
+    flex: 8,
+  },
+  faculty: {
+    color: "grey",
+  },
   headerText: {
     fontSize: 35,
     color: "#444",
@@ -39,8 +71,35 @@ const Styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
   },
+  editButton: {
+    borderWidth: 1,
+    borderColor: "green",
+    borderRadius: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: "lightgreen",
+    marginBottom: 5,
+  },
+  infoButton: {
+    borderWidth: 1,
+    borderColor: "blue",
+    borderRadius: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: "skyblue",
+    marginBottom: 5,
+  },
+  deleteButton: {
+    borderWidth: 1,
+    borderColor: "black",
+    borderRadius: 14,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    backgroundColor: "red",
+    marginBottom: 5,
+  },
   buttonText: {
-    fontSize: 30,
+    fontSize: 15,
   },
   addButtonText: {
     fontSize: 24,

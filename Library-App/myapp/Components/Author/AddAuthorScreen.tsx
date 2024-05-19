@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
 import Styles from "../Styles";
+import GlobalContext from "../../Utils/Context";
+import { createAuthor } from "../../Services/author.api";
 
 const initialAuthor = {
   id: "",
@@ -9,11 +11,26 @@ const initialAuthor = {
   email: "",
 };
 
-function AddAuthorScreen() {
+function AddAuthorScreen({ navigation }: any) {
+  const { authors, setAuthors } = useContext(GlobalContext);
   const [author, setAuthor] = useState(initialAuthor);
 
-  const handleAdd = () => {
-    console.log("Adding author", author);
+  const handleAdd = async () => {
+    const index = authors.findIndex(
+      (curAuth) =>
+        curAuth.id.trim().toLowerCase() === author.id.trim().toLowerCase()
+    );
+    if (index === -1) {
+      try {
+        const res = await createAuthor(author);
+        if (res) {
+          setAuthors([...authors, res]);
+          console.log("Added author:", res);
+          navigation.goBack();
+        }
+      } catch (error) {}
+    }
+    console.log("Author unable to add:", author);
   };
 
   return (
@@ -27,9 +44,14 @@ function AddAuthorScreen() {
           setAuthor((prev) => ({
             ...prev,
             name: text,
-            id: Date.now().toString(),
           }))
         }
+      />
+      <TextInput
+        placeholder="ID:"
+        style={Styles.input}
+        value={author.id}
+        onChangeText={(text) => setAuthor((prev) => ({ ...prev, id: text }))}
       />
       <TextInput
         placeholder="Phone:"
@@ -44,7 +66,7 @@ function AddAuthorScreen() {
         onChangeText={(text) => setAuthor((prev) => ({ ...prev, email: text }))}
       />
       <Pressable style={Styles.button} onPress={handleAdd}>
-        <Text style={Styles.buttonText}>Add Author</Text>
+        <Text style={Styles.buttonText}>Add</Text>
       </Pressable>
     </View>
   );
