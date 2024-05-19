@@ -11,6 +11,7 @@
   "dependencies": {
     "@expo/metro-runtime": "~3.2.1",
     "@expo/vector-icons": "^14.0.2",
+    "@react-native-community/checkbox": "^0.5.17",
     "@react-native-picker/picker": "^2.7.5",
     "@react-navigation/bottom-tabs": "^6.5.20",
     "@react-navigation/native-stack": "^6.9.26",
@@ -24,6 +25,7 @@
     "react-dom": "18.2.0",
     "react-native": "0.74.1",
     "react-native-get-random-values": "^1.11.0",
+    "react-native-select-multiple": "^2.1.0",
     "react-native-web": "~0.19.10",
     "shortid": "^2.2.16",
     "uuid": "^9.0.1"
