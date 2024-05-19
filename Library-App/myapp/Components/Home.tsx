@@ -1,4 +1,4 @@
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { createStackNavigator } from "@react-navigation/stack";
 
 import BookListScreen from "./Book/HomeScreen";
 import BookDetailsScreen from "./Book/BookDetailsScreen";
@@ -7,9 +7,10 @@ import UpdateBookScreen from "./Book/UpdateBookScreen";
 import AuthorListScreen from "./Author/AuthorListScreen";
 import AddAuthorScreen from "./Author/AddAuthorScreen";
 import UpdateAuthorScreen from "./Author/UpdateAuthorScreen";
+import AuthorDetailsScreen from "./Author/AuthorDetailsScreen";
 
 function Home() {
-  const { Navigator, Screen } = createNativeStackNavigator();
+  const { Navigator, Screen } = createStackNavigator();
 
   return (
     <Navigator initialRouteName="book-list">
@@ -27,7 +28,7 @@ function Home() {
         component={AuthorListScreen}
         options={{
           title: "Authors",
-          headerShown: false,
+          headerShown: true,
         }}
       />
       <Screen
@@ -35,7 +36,7 @@ function Home() {
         component={AddAuthorScreen}
         options={{
           title: "Add Author",
-          headerShown: false,
+          headerShown: true,
         }}
       />
       <Screen
@@ -43,7 +44,15 @@ function Home() {
         component={UpdateAuthorScreen}
         options={{
           title: "Update Author",
-          headerShown: false,
+          headerShown: true,
+        }}
+      />
+      <Screen
+        name="author-details"
+        component={AuthorDetailsScreen}
+        options={{
+          title: "Author Detials",
+          headerShown: true,
         }}
       />
     </Navigator>

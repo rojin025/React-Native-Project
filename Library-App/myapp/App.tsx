@@ -5,16 +5,18 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { AuthorI, BookI } from "./Types/Types";
+import { AuthorI, BookI, PublisherI } from "./Types/Types";
 import { getBooks } from "./Services/book.api";
 import GlobalContext from "./Utils/Context";
 import Home from "./Components/Home";
 import About from "./Components/About";
 import { getAuthors } from "./Services/author.api";
+import { getPublishers } from "./Services/publisher.api";
 
 export default function App() {
   const [books, setBooks] = useState<BookI[]>([]);
   const [authors, setAuthors] = useState<AuthorI[]>([]);
+  const [publishers, setPublishers] = useState<PublisherI[]>([]);
 
   const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -36,10 +38,29 @@ export default function App() {
       }
     };
     loadAuthors();
+
+    const loadPublishers = async () => {
+      try {
+        setPublishers(await getPublishers());
+        console.log("Loading Pub", publishers);
+      } catch (error) {
+        console.log("Error Loading Publishers: ", error);
+      }
+    };
+    loadPublishers();
   }, []);
 
   return (
-    <GlobalContext.Provider value={{ books, setBooks, authors, setAuthors }}>
+    <GlobalContext.Provider
+      value={{
+        books,
+        setBooks,
+        authors,
+        setAuthors,
+        publishers,
+        setPublishers,
+      }}
+    >
       <NavigationContainer>
         <Navigator screenOptions={{ headerShown: false }}>
           <Screen

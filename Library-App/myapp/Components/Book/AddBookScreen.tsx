@@ -5,6 +5,7 @@ import Styles from "../Styles";
 import { createBook } from "../../Services/book.api";
 import GlobalContext from "../../Utils/Context";
 import { v4 as uuidv4 } from "uuid";
+import { Picker } from "@react-native-picker/picker";
 
 const intitalBook = {
   id: "",
@@ -17,7 +18,8 @@ const intitalBook = {
 
 function AddBookScreen({ navigation }: any) {
   const [book, setBook] = useState(intitalBook);
-  const { books, setBooks } = useContext(GlobalContext);
+  const { books, setBooks, publishers } = useContext(GlobalContext);
+  const [seletedPublisherId, setSeletedPublisherId] = useState("");
 
   const handleAdd = async () => {
     const { title, genre, category, publisherId } = book;
@@ -26,11 +28,15 @@ function AddBookScreen({ navigation }: any) {
       alert("Please fill in all fields");
       return;
     }
+    const updatedBook = { ...book, publisherId: seletedPublisherId };
+    console.log("Id ---->> ", seletedPublisherId);
+    console.log("New Book is ---- ", updatedBook);
+    setBook(updatedBook);
 
     try {
       console.log("API Book ", book);
 
-      const res = await createBook(book);
+      const res = await createBook(updatedBook);
       if (res) {
         setBooks([...books, res]);
         navigation.goBack();
@@ -64,12 +70,17 @@ function AddBookScreen({ navigation }: any) {
         value={book.category}
         onChangeText={(text) => setBook({ ...book, category: text })}
       />
-      <TextInput
-        style={Styles.input}
-        placeholder="PublisherId:"
-        value={book.publisherId}
-        onChangeText={(text) => setBook({ ...book, publisherId: text })}
-      />
+      <Picker
+        selectedValue={seletedPublisherId}
+        onValueChange={(itemValue, itemIndex) =>
+          setSeletedPublisherId(itemValue)
+        }
+        style={{ width: "100%" }}
+      >
+        {publishers.map((publisher) => (
+          <Picker.Item label={`${publisher.name}`} value={`${publisher.id}`} />
+        ))}
+      </Picker>
       {/* <TextInput
         style={Styles.input}
         placeholder="Authors: Seperate with ,"

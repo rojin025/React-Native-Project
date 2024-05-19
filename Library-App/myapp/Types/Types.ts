@@ -13,3 +13,11 @@ export interface AuthorI {
   phone: string;
   email: string;
 }
+
+export interface PublisherI {
+  id: string;
+  name: string;
+  phone: string;
+  email: string;
+  address: string;
+}

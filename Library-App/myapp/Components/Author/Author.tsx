@@ -18,7 +18,7 @@ function Author({ data, index }: props) {
   const { authors, setAuthors } = useContext(GlobalContext);
 
   const handleNavToAuthorDetails = () => {
-    // navigation.navigate("book-details", data);
+    navigation.navigate("author-details", data);
   };
 
   const askDeleteConfirmation = () => {
