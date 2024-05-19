@@ -32,9 +32,9 @@ function Book({ data, index }: props) {
     } catch (error) {}
   };
 
-  //   const handleEdit = () => {
-  //     navigation.navigate("update-course", data);
-  //   };
+  const handleEdit = () => {
+    navigation.navigate("update-book", data);
+  };
 
   return (
     <View style={{ backgroundColor: index % 2 === 0 ? "white" : "lightgrey" }}>
@@ -61,13 +61,13 @@ function Book({ data, index }: props) {
           >
             <Text style={styles.buttonText}>Delete</Text>
           </TouchableHighlight>
-          {/* <TouchableHighlight
+          <TouchableHighlight
             onPress={handleEdit}
             style={styles.button}
             underlayColor="Green"
           >
             <Text style={styles.buttonText}> Edit </Text>
-          </TouchableHighlight> */}
+          </TouchableHighlight>
         </View>
       </View>
     </View>

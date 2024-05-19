@@ -29,7 +29,7 @@ export async function createBook(book: BookI) {
 
 export async function updateBook(id: string, book: BookI) {
   try {
-    const res = await axios.post(`books/${id}`, book);
+    const res = await axios.put(`books/${id}`, book);
     if (res.status === 200) {
       return res.data;
     }
