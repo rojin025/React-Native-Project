@@ -1,4 +1,11 @@
-import { FlatList, SafeAreaView, Text, TextInput, View } from "react-native";
+import {
+  FlatList,
+  Pressable,
+  SafeAreaView,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 
 import Styles from "../Styles";
 import { Header } from "react-native/Libraries/NewAppScreen";
@@ -6,8 +13,9 @@ import { useEffect, useState } from "react";
 import { AuthorI } from "../../Types/Types";
 import { getAuthors } from "../../Services/author.api";
 import Author from "./Author";
+import AddAuthorScreen from "./AddAuthorScreen";
 
-function AuthorListScreen() {
+function AuthorListScreen({ navigation }: any) {
   const [authors, setAuthors] = useState<AuthorI[]>([]);
 
   useEffect(() => {
@@ -38,6 +46,14 @@ function AuthorListScreen() {
         renderItem={({ item, index }) => <Author data={item} index={index} />}
         keyExtractor={(item: AuthorI) => item.id}
       />
+      <Pressable
+        style={Styles.button}
+        onPress={() => {
+          navigation.navigate("add-author");
+        }}
+      >
+        <Text style={Styles.buttonText}>Add Author</Text>
+      </Pressable>
     </SafeAreaView>
   );
 }

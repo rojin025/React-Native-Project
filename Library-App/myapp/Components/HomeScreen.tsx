@@ -5,6 +5,7 @@ import BookDetailsScreen from "./Book/BookDetailsScreen";
 import AddBookScreen from "./Book/AddBookScreen";
 import UpdateBookScreen from "./Book/UpdateBookScreen";
 import AuthorListScreen from "./Author/AuthorListScreen";
+import AddAuthorScreen from "./Author/AddAuthorScreen";
 
 function HomeScreen() {
   const { Navigator, Screen } = createNativeStackNavigator();
@@ -23,6 +24,14 @@ function HomeScreen() {
       <Screen
         name="author-list"
         component={AuthorListScreen}
+        options={{
+          title: "Authors",
+          headerShown: false,
+        }}
+      />
+      <Screen
+        name="add-author"
+        component={AddAuthorScreen}
         options={{
           title: "Authors",
           headerShown: false,

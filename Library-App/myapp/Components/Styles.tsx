@@ -39,6 +39,9 @@ const Styles = StyleSheet.create({
     marginVertical: 10,
     marginHorizontal: 20,
   },
+  buttonText: {
+    fontSize: 30,
+  },
   addButtonText: {
     fontSize: 24,
     color: "#ffffff",
