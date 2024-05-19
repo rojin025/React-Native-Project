@@ -6,7 +6,7 @@ axios.defaults.baseURL = "http://localhost:9000/";
 
 export async function getAuthors() {
   try {
-    const res = await axios.get("/authors");
+    const res = await axios.get("authors");
     if (res.status === 200) return res.data;
   } catch (error) {
     console.log(error);
@@ -16,7 +16,7 @@ export async function getAuthors() {
 
 export async function createAuthor(author: AuthorI) {
   try {
-    const res = await axios.post("/authors", author);
+    const res = await axios.post("authors", author);
     if (res.status === 201) {
       return res.data;
     }
@@ -28,7 +28,7 @@ export async function createAuthor(author: AuthorI) {
 
 export async function updateAuthor(id: string, author: AuthorI) {
   try {
-    const res = await axios.post(`/Authors/${id}`, author);
+    const res = await axios.post(`authors/${id}`, author);
     if (res.status === 200) {
       return res.data;
     }

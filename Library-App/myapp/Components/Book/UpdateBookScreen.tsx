@@ -34,9 +34,7 @@ function UpdateBookScreen({ navigation, route }: any) {
         style={Styles.input}
         placeholder="Title:"
         value={book.title}
-        onChangeText={(text) =>
-          setBook({ ...book, title: text, id: Date.now().toString() })
-        }
+        onChangeText={(text) => setBook({ ...book, title: text })}
       />
       <TextInput
         style={Styles.input}

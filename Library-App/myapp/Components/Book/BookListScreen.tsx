@@ -7,13 +7,17 @@ import {
   Text,
   FlatList,
   TextInput,
+  Pressable,
 } from "react-native";
+
 import { BookI } from "../../Types/Types";
 import GlobalContext from "../../Utils/Context";
 import Book from "./Book";
 import AddBookButton from "./AddBookButton";
 
-export default function BookListScreen() {
+import Styles from "../Styles";
+
+export default function BookListScreen({ navigation }: any) {
   const { books } = useContext(GlobalContext);
   const [search, setSearch] = useState("");
   const [displayList, setDisplayList] = useState<BookI[]>([]);
@@ -45,6 +49,14 @@ export default function BookListScreen() {
         renderItem={({ item, index }) => <Book data={item} index={index} />}
         keyExtractor={(item) => item.id!}
       />
+      <View>
+        <Pressable
+          style={Styles.button}
+          onPress={() => navigation.navigate("author-list")}
+        >
+          <Text style={Styles.addButtonText}>Authors</Text>
+        </Pressable>
+      </View>
     </SafeAreaView>
   );
 }

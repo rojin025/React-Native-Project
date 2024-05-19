@@ -8,7 +8,7 @@ export interface BookI {
 }
 
 export interface AuthorI {
-  id?: string;
+  id: string;
   name: string;
   phone: string;
   email: string;

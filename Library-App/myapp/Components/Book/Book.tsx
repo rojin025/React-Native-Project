@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import { BookI } from "../../Types/Types";
 import { deleteBook } from "../../Services/book.api";
 import GlobalContext from "../../Utils/Context";
+import showConfirmation from "../../Utils/Confirmation";
 
 interface props {
   data: BookI;
@@ -21,15 +22,25 @@ function Book({ data, index }: props) {
     navigation.navigate("book-details", data);
   };
 
-  const handleDelete = async () => {
-    try {
-      const res = await deleteBook(data.id);
-      if (res) {
-        console.log("res", res);
-        const updatedBooks = books.filter((book) => book.id !== data.id);
-        setBooks(updatedBooks);
+  const askDeleteConfirmation = () => {
+    showConfirmation(
+      "Delete",
+      "Are you sure?",
+      () => handleDelete(),
+      () => {
+        console.log("cancelled");
       }
-    } catch (error) {}
+    );
+    const handleDelete = async () => {
+      try {
+        const res = await deleteBook(data.id);
+        if (res) {
+          console.log("res", res);
+          const updatedBooks = books.filter((book) => book.id !== data.id);
+          setBooks(updatedBooks);
+        }
+      } catch (error) {}
+    };
   };
 
   const handleEdit = () => {
@@ -55,7 +66,7 @@ function Book({ data, index }: props) {
             <Text style={styles.buttonText}>Details</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            onPress={handleDelete}
+            onPress={askDeleteConfirmation}
             style={styles.deleteButton}
             underlayColor="red"
           >
