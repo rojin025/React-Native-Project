@@ -55,7 +55,7 @@ export default function HomeScreen({ navigation }: any) {
           style={Styles.button}
           onPress={() => navigation.navigate("author-list")}
         >
-          <Text style={Styles.addButtonText}>Authors</Text>
+          <Text style={Styles.buttonTextPrimary}>Authors</Text>
         </Pressable>
       </View>
     </SafeAreaView>

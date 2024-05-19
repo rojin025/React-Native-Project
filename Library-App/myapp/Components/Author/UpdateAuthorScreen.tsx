@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import { Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
 import Styles from "../Styles";
 import GlobalContext from "../../Utils/Context";
+import { updateAuthor } from "../../Services/author.api";
 
 function UpdateAuthorScreen({ navigation, route }: any) {
   const [author, setAuthor] = useState(route.params);
@@ -9,6 +10,23 @@ function UpdateAuthorScreen({ navigation, route }: any) {
 
   const handleUpdate = async () => {
     console.log("Update:", author);
+    try {
+      const res = await updateAuthor(author.id, author);
+      if (res) {
+        const index = authors.findIndex(
+          (currAuth) => currAuth.id === author.id
+        );
+        if (index !== -1) {
+          const updatedAuthors = [...authors];
+          updatedAuthors[index] = res;
+          setAuthors([]);
+          setAuthors(updatedAuthors);
+          navigation.goBack();
+        }
+      }
+    } catch (error) {
+      console.error("Error updating Author:", error);
+    }
   };
 
   return (
@@ -39,7 +57,7 @@ function UpdateAuthorScreen({ navigation, route }: any) {
         onChangeText={(text) => setAuthor({ ...author, email: text })}
       />
       <Pressable style={Styles.button} onPress={handleUpdate}>
-        <Text style={Styles.buttonText}>Add</Text>
+        <Text style={Styles.buttonTextPrimary}>Update</Text>
       </Pressable>
     </View>
   );

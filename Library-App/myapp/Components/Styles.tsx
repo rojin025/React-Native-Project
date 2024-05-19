@@ -100,8 +100,9 @@ const Styles = StyleSheet.create({
   },
   buttonText: {
     fontSize: 15,
+    textAlign: "center",
   },
-  addButtonText: {
+  buttonTextPrimary: {
     fontSize: 24,
     color: "#ffffff",
     textAlign: "center",

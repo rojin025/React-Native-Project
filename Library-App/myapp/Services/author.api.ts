@@ -28,7 +28,7 @@ export async function createAuthor(author: AuthorI) {
 
 export async function updateAuthor(id: string, author: AuthorI) {
   try {
-    const res = await axios.post(`authors/${id}`, author);
+    const res = await axios.put(`authors/${id}`, author);
     if (res.status === 200) {
       return res.data;
     }

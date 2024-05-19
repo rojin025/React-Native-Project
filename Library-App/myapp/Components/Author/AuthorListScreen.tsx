@@ -25,7 +25,7 @@ function AuthorListScreen({ navigation }: any) {
       <FlatList
         data={authors}
         renderItem={({ item, index }) => <Author data={item} index={index} />}
-        keyExtractor={(item: AuthorI) => item.id}
+        keyExtractor={(item) => item.id}
       />
       <Pressable
         style={Styles.button}
