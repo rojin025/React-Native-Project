@@ -12,8 +12,12 @@ import Home from "./Components/Home";
 import About from "./Components/About";
 import { getAuthors } from "./Services/author.api";
 import { getPublishers } from "./Services/publisher.api";
+import Login from "./Components/LoginScreen";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { LOCAL_STORAGE_KEY } from "./Components/constants";
 
 export default function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
   const [books, setBooks] = useState<BookI[]>([]);
   const [authors, setAuthors] = useState<AuthorI[]>([]);
   const [publishers, setPublishers] = useState<PublisherI[]>([]);
@@ -21,6 +25,15 @@ export default function App() {
   const { Navigator, Screen } = createBottomTabNavigator();
 
   useEffect(() => {
+    const checkIsLoggedIn = async () => {
+      const isLoggedIn = await AsyncStorage.getItem(LOCAL_STORAGE_KEY);
+      if (isLoggedIn) {
+        const user = JSON.parse(isLoggedIn);
+        setLoggedIn(user.loggedIn);
+      }
+    };
+    checkIsLoggedIn();
+
     const loadBooks = async () => {
       try {
         setBooks(await getBooks());
@@ -50,9 +63,14 @@ export default function App() {
     loadPublishers();
   }, []);
 
+  if (!loggedIn) {
+    return <Login setLoggedIn={setLoggedIn} />;
+  }
+
   return (
     <GlobalContext.Provider
       value={{
+        setLoggedIn,
         books,
         setBooks,
         authors,

@@ -2,6 +2,7 @@ import { createContext } from "react";
 import { AuthorI, BookI, PublisherI } from "../Types/Types";
 
 interface ContextType {
+  setLoggedIn: (value: boolean) => void;
   books: BookI[];
   setBooks: (books: BookI[]) => void;
   authors: AuthorI[];
@@ -11,6 +12,7 @@ interface ContextType {
 }
 
 const initialContext = {
+  setLoggedIn: () => {},
   books: [],
   setBooks: () => {},
   authors: [],
