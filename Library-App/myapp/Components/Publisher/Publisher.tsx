@@ -3,23 +3,23 @@ import { SafeAreaView, Text, TouchableHighlight, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import GlobalContext from "../../Utils/Context";
-import { deleteAuthor } from "../../Services/author.api";
 import showConfirmation from "../../Utils/Confirmation";
-import { AuthorI } from "../../Types/Types";
+import { PublisherI } from "../../Types/Types";
 
 import Styles from "../Styles";
+import { deletePublisher } from "../../Services/publisher.api";
 
 interface props {
-  data: AuthorI;
+  publisherData: PublisherI;
   index: number;
 }
 
-function Author({ data, index }: props) {
+function Publisher({ publisherData, index }: props) {
   const navigation = useNavigation();
-  const { authors, setAuthors } = useContext(GlobalContext);
+  const { publishers, setPublishers } = useContext(GlobalContext);
 
-  const handleNavToAuthorDetails = () => {
-    navigation.navigate("author-details", data);
+  const handleNavToPublisherDetails = () => {
+    navigation.navigate("publisher-details", publisherData);
   };
 
   const askDeleteConfirmation = () => {
@@ -33,20 +33,20 @@ function Author({ data, index }: props) {
     );
     const handleDelete = async () => {
       try {
-        const res = await deleteAuthor(data.id);
+        const res = await deletePublisher(publisherData.id);
         if (res) {
           console.log("res", res);
-          const updatedAuthors = authors.filter(
-            (author) => author.id !== data.id
+          const updatedPublishers = publishers.filter(
+            (publisher) => publisher.id !== publisherData.id
           );
-          setAuthors(updatedAuthors);
+          setPublishers(updatedPublishers);
         }
       } catch (error) {}
     };
   };
 
   const handleEdit = () => {
-    navigation.navigate("update-author", data);
+    navigation.navigate("update-publisher", publisherData);
   };
 
   return (
@@ -59,16 +59,16 @@ function Author({ data, index }: props) {
       >
         <View style={Styles.row}>
           <View style={Styles.course}>
-            <Text style={Styles.title}>{data.name}</Text>
+            <Text style={Styles.title}>{publisherData.name}</Text>
             <Text style={Styles.faculty}>
-              {data.id} - {data.phone}
+              {publisherData.id} - {publisherData.phone}
             </Text>
-            <Text style={Styles.faculty}>{data.email}</Text>
+            <Text style={Styles.faculty}>{publisherData.email}</Text>
           </View>
 
           <View style={Styles.edges}>
             <TouchableHighlight
-              onPress={handleNavToAuthorDetails}
+              onPress={handleNavToPublisherDetails}
               style={Styles.infoButton}
               underlayColor="#5398DC"
             >
@@ -95,4 +95,4 @@ function Author({ data, index }: props) {
   );
 }
 
-export default Author;
+export default Publisher;

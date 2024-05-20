@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
-import { Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
-import Styles from "../Styles";
+import { Pressable, Text, TextInput, View } from "react-native";
+
 import GlobalContext from "../../Utils/Context";
 import { updateAuthor } from "../../Services/author.api";
+
+import Styles from "../Styles";
 
 function UpdateAuthorScreen({ navigation, route }: any) {
   const [author, setAuthor] = useState(route.params);
@@ -31,7 +33,7 @@ function UpdateAuthorScreen({ navigation, route }: any) {
 
   return (
     <View style={Styles.container}>
-      <Text style={Styles.title}>Add Authors</Text>
+      <Text style={Styles.headerText}>Add Authors</Text>
       <TextInput
         placeholder="Name:"
         style={Styles.input}
@@ -40,7 +42,8 @@ function UpdateAuthorScreen({ navigation, route }: any) {
       />
       <TextInput
         placeholder="ID:"
-        style={Styles.input}
+        style={[Styles.input, { color: "lightgray" }]}
+        editable={false}
         value={author.id}
         onChangeText={(text) => setAuthor({ ...author, id: text })}
       />

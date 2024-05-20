@@ -1,8 +1,10 @@
 import { useContext, useState } from "react";
-import { Pressable, SafeAreaView, Text, TextInput, View } from "react-native";
-import Styles from "../Styles";
+import { Pressable, Text, TextInput, View } from "react-native";
+
 import GlobalContext from "../../Utils/Context";
 import { createAuthor } from "../../Services/author.api";
+
+import Styles from "../Styles";
 
 const initialAuthor = {
   id: "",

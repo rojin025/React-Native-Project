@@ -8,6 +8,10 @@ import AuthorListScreen from "./Author/AuthorListScreen";
 import AddAuthorScreen from "./Author/AddAuthorScreen";
 import UpdateAuthorScreen from "./Author/UpdateAuthorScreen";
 import AuthorDetailsScreen from "./Author/AuthorDetailsScreen";
+import PublisherDetailsScreen from "./Publisher/PublisherDetailsScreen";
+import PublisherListScreen from "./Publisher/PublisherListScreen";
+import UpdatePublisherScreen from "./Publisher/UpdatePublisherScreen";
+import AddPublisherScreen from "./Publisher/AddPublisherScreen";
 
 function Home() {
   const { Navigator, Screen } = createStackNavigator();
@@ -21,7 +25,26 @@ function Home() {
       />
       <Screen name="book-details" component={BookDetailsScreen} />
       <Screen name="add-book" component={AddBookScreen} />
-      <Screen name="update-book" component={UpdateBookScreen} />
+      <Screen
+        name="update-book"
+        component={UpdateBookScreen}
+        options={{
+          title: "Update Book",
+          headerShown: true,
+        }}
+      />
+
+      <Screen name="publisher-list" component={PublisherListScreen} />
+      <Screen name="publisher-details" component={PublisherDetailsScreen} />
+      <Screen name="add-publisher" component={AddPublisherScreen} />
+      <Screen
+        name="update-publisher"
+        component={UpdatePublisherScreen}
+        options={{
+          title: "Update Publisher",
+          headerShown: true,
+        }}
+      />
 
       <Screen
         name="author-list"

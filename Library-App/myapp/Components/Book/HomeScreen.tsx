@@ -8,6 +8,7 @@ import {
   FlatList,
   TextInput,
   Pressable,
+  ScrollView,
 } from "react-native";
 
 import { BookI } from "../../Types/Types";
@@ -50,14 +51,22 @@ export default function HomeScreen({ navigation }: any) {
         renderItem={({ item, index }) => <Book data={item} index={index} />}
         keyExtractor={(item) => item.id!}
       />
-      <View>
-        <Pressable
-          style={Styles.button}
-          onPress={() => navigation.navigate("author-list")}
-        >
-          <Text style={Styles.buttonTextPrimary}>Authors</Text>
-        </Pressable>
-      </View>
+      <ScrollView horizontal>
+        <View style={styles.horizontalContainer}>
+          <Pressable
+            style={styles.horizontalContainerButton}
+            onPress={() => navigation.navigate("author-list")}
+          >
+            <Text style={styles.horizontalContainerButtonText}>Authors</Text>
+          </Pressable>
+          <Pressable
+            style={styles.horizontalContainerButton}
+            onPress={() => navigation.navigate("publisher-list")}
+          >
+            <Text style={styles.horizontalContainerButtonText}>Publishers</Text>
+          </Pressable>
+        </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -68,6 +77,25 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     paddingTop: Platform.OS === "android" ? 30 : 0,
     paddingBottom: 200,
+  },
+  horizontalContainer: {
+    flexDirection: "row",
+  },
+
+  horizontalContainerButtonText: {
+    fontSize: 15,
+    paddingBottom: 6,
+    textAlign: "center",
+    color: "white",
+  },
+
+  horizontalContainerButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    backgroundColor: "lightblue",
+    borderRadius: 10,
+    marginVertical: 10,
+    marginHorizontal: 20,
   },
   input: {
     padding: 10,
