@@ -3,7 +3,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 
-const About = () => {
+const AboutScreen = () => {
   return (
     <View style={{ flex: 1, padding: 40 }}>
       <Text style={styles.header}>About Page</Text>
@@ -28,7 +28,7 @@ const About = () => {
   );
 };
 
-export default About;
+export default AboutScreen;
 
 const styles = StyleSheet.create({
   header: {

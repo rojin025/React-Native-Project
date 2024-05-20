@@ -14,12 +14,15 @@ interface LoginProps {
 
 export default function Login({ setLoggedIn }: LoginProps) {
   const [email, setEmail] = useState("");
-  const onLogin = async () => {
+
+  const handleLogin = async () => {
     try {
       if (email.trim() === "") {
         return Alert.alert("Please enter email");
       }
+
       const res = await isEligibleUser(email);
+
       if (res) {
         AsyncStorage.setItem(
           LOCAL_STORAGE_KEY,
@@ -29,8 +32,11 @@ export default function Login({ setLoggedIn }: LoginProps) {
       } else {
         return Alert.alert("Wrong email");
       }
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
+
   return (
     <SafeAreaView style={Styles.container}>
       <TextInput
@@ -40,7 +46,7 @@ export default function Login({ setLoggedIn }: LoginProps) {
         onChangeText={(text) => setEmail(text)}
         autoCapitalize="none"
       />
-      <Pressable style={Styles.button} onPress={onLogin}>
+      <Pressable style={Styles.button} onPress={handleLogin}>
         <Text style={Styles.buttonText}>Login</Text>
       </Pressable>
     </SafeAreaView>

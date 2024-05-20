@@ -9,12 +9,13 @@ import { AuthorI, BookI, PublisherI } from "./Types/Types";
 import { getBooks } from "./Services/book.api";
 import GlobalContext from "./Utils/Context";
 import Home from "./Components/Home";
-import About from "./Components/About";
+import About from "./Components/AboutScreen";
 import { getAuthors } from "./Services/author.api";
 import { getPublishers } from "./Services/publisher.api";
 import Login from "./Components/LoginScreen";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { LOCAL_STORAGE_KEY } from "./Components/constants";
+import AboutScreen from "./Components/UserScreen";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -93,11 +94,20 @@ export default function App() {
           />
           <Screen
             name="About us"
+            component={AboutScreen}
+            options={{
+              tabBarIcon: ({ color }) => (
+                <MaterialCommunityIcons name="heart" color={color} size={24} />
+              ),
+            }}
+          />
+          <Screen
+            name="User"
             component={About}
             options={{
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons
-                  name="account"
+                  name="cog-outline"
                   color={color}
                   size={24}
                 />
