@@ -1,57 +1,41 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import {
-  StyleSheet,
-  View,
-  Text,
-  TouchableHighlight,
-  Pressable,
-} from "react-native";
+import { StyleSheet, View, Text, Pressable } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { BookI, CatalogI } from "../../Types/Types";
 import Styles from "../Styles";
 import GlobalContext from "../../Utils/Context";
 import { updateCatalog } from "../../Services/catalogs.api";
+import { AntDesign } from "@expo/vector-icons";
 
-interface props {
-  data: BookI;
-  route: any;
-}
-
-export default function BookDetailsScreen({ route }: props) {
+export default function BookDetailsScreen({ route, navigation }: any) {
   const { title, id, genre, category, authorIDs, publisherId } = route.params;
-  const navigation = useNavigation();
   const { catalogs, setCatalogs } = useContext(GlobalContext);
   const [catalog, setCatalog] = useState<CatalogI | null>(null);
 
   useEffect(() => {
-    console.log("ID -------", id);
-    console.log(catalogs);
     const index = catalogs.findIndex((catalog) => catalog.bookId === id);
     if (index !== -1) {
       setCatalog(catalogs[index]);
     }
-    // borrow BOoks
-    // - search catalog in catalogs Array
-    // - setCatalog
-    // -
   }, [catalogs, id]);
 
-  const handleBorrow = async () => {
-    console.log("handle Books");
-
-    if (!catalog || catalog.availableCopies === 0) {
-      return alert("Cannot borrow this book now.");
+  const handleTransaction = async (transaction: number) => {
+    if (transaction !== 1 && transaction !== -1) {
+      return alert("Invalid operation.");
+    }
+    if (!catalog || (transaction === -1 && catalog.availableCopies === 0)) {
+      return alert("Cannot operate this book now.");
     }
 
     const updatedCatalog = {
       ...catalog,
-      availableCopies: catalog.availableCopies - 1,
+      availableCopies: catalog.availableCopies + transaction,
     };
 
-    const res = await updateCatalog(updatedCatalog.id, updatedCatalog);
+    const data = await updateCatalog(updatedCatalog.id, updatedCatalog);
 
-    if (res.status === 200) {
+    if (data) {
       let index = catalogs.findIndex((catalog) => catalog.bookId === id);
       if (index !== -1) {
         const updatedCatalogs = [...catalogs];
@@ -65,6 +49,8 @@ export default function BookDetailsScreen({ route }: props) {
   function BorrowAble() {
     return (
       <View>
+        <Text style={Styles.title}>Brrow Books</Text>
+
         <Text style={styles.name}>
           Available Books: {catalog?.availableCopies}
         </Text>
@@ -72,8 +58,14 @@ export default function BookDetailsScreen({ route }: props) {
           Numbers of Copies: {catalog?.numberOfCopies}
         </Text>
         <Pressable
+          style={[Styles.button, { backgroundColor: "skyblue" }]}
+          onPress={() => handleTransaction(1)}
+        >
+          <Text style={Styles.buttonTextPrimary}>Return</Text>
+        </Pressable>
+        <Pressable
           style={[Styles.button, { backgroundColor: "green" }]}
-          onPress={handleBorrow}
+          onPress={() => handleTransaction(-1)}
         >
           <Text style={Styles.buttonTextPrimary}>Borrow</Text>
         </Pressable>
@@ -81,9 +73,15 @@ export default function BookDetailsScreen({ route }: props) {
     );
   }
 
-  return (
-    <View style={Styles.container}>
-      <View style={[Styles.container, { margin: 30 }]}>
+  const BookDetails = React.memo(() => {
+    return (
+      <View>
+        <AntDesign
+          name="codesquare"
+          size={100}
+          style={styles.icon}
+          color="#0066CC"
+        />
         <Text style={Styles.title}>{title}</Text>
         <Text style={styles.name}>{id}</Text>
         <Text style={styles.info}>{genre}</Text>
@@ -91,8 +89,13 @@ export default function BookDetailsScreen({ route }: props) {
         <Text style={styles.info}>{authorIDs}</Text>
         <Text style={styles.info}>{publisherId}</Text>
       </View>
+    );
+  });
+
+  return (
+    <View style={styles.container}>
       <View>
-        <Text style={Styles.title}>Brrow Books</Text>
+        <BookDetails />
         {catalog ? (
           <BorrowAble />
         ) : (
@@ -107,10 +110,17 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    padding: 30,
+    justifyContent: "center",
+    alignContent: "center",
   },
   name: {
     fontSize: 19,
     marginTop: 5,
+  },
+  icon: {
+    marginVertical: 20,
+    alignSelf: "center",
   },
   info: {
     color: "grey",

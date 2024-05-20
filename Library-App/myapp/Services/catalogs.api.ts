@@ -28,9 +28,6 @@ export async function createCatalog(catalog: CatalogI) {
 
 export async function updateCatalog(id: string, catalog: CatalogI) {
   try {
-    console.log("API ID ", id);
-    console.log("API catalog ", catalog);
-
     const res = await axios.put(`catalogs/${id}`, catalog);
     if (res.status === 200) {
       return res.data;
