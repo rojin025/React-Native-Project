@@ -116,16 +116,20 @@ export default function App() {
             options={{
               title: "Books",
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="home" color={color} size={24} />
+                <MaterialCommunityIcons name="book" color={color} size={24} />
               ),
             }}
           />
           <Screen
-            name="About us"
+            name="Process"
             component={AboutScreen}
             options={{
               tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="heart" color={color} size={24} />
+                <MaterialCommunityIcons
+                  name="barcode-scan"
+                  color={color}
+                  size={24}
+                />
               ),
             }}
           />

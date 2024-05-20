@@ -38,3 +38,11 @@ export interface MemberI {
   phone: string;
   email: string;
 }
+
+export interface transactions {
+  id: string;
+  bookId: string;
+  memberId: string;
+  borrowedDate: string;
+  returnedDate: string;
+}

@@ -59,7 +59,8 @@ function UpdateMemberScreen({ navigation, route }: any) {
       />
       <TextInput
         placeholder="ID:"
-        style={Styles.input}
+        style={[Styles.input, { color: "lightgray" }]}
+        editable={false}
         value={member.id}
         onChangeText={(text) => setMember((prev) => ({ ...prev, id: text }))}
       />
