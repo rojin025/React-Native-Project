@@ -68,6 +68,12 @@ export default function HomeScreen({ navigation }: any) {
                 Publishers
               </Text>
             </Pressable>
+            <Pressable
+              style={styles.horizontalContainerButton}
+              onPress={() => navigation.navigate("member-list")}
+            >
+              <Text style={styles.horizontalContainerButtonText}>Members</Text>
+            </Pressable>
           </View>
         </ScrollView>
       </View>

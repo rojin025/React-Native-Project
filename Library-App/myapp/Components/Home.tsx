@@ -12,6 +12,10 @@ import PublisherDetailsScreen from "./Publisher/PublisherDetailsScreen";
 import PublisherListScreen from "./Publisher/PublisherListScreen";
 import UpdatePublisherScreen from "./Publisher/UpdatePublisherScreen";
 import AddPublisherScreen from "./Publisher/AddPublisherScreen";
+import MemberListScreen from "./Member/MemberListScreen";
+import MemberDetailsScreen from "./Member/MemberDetailsScreen";
+import AddMemberScreen from "./Member/AddMemberScreen";
+import UpdateMemberScreen from "./Member/UpdateMemberScreen";
 
 function Home() {
   const { Navigator, Screen } = createStackNavigator();
@@ -40,6 +44,18 @@ function Home() {
       <Screen
         name="update-publisher"
         component={UpdatePublisherScreen}
+        options={{
+          title: "Update Publisher",
+          headerShown: true,
+        }}
+      />
+
+      <Screen name="member-list" component={MemberListScreen} />
+      <Screen name="member-details" component={MemberDetailsScreen} />
+      <Screen name="add-member" component={AddMemberScreen} />
+      <Screen
+        name="update-member"
+        component={UpdateMemberScreen}
         options={{
           title: "Update Publisher",
           headerShown: true,

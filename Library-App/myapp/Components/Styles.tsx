@@ -104,6 +104,7 @@ const Styles = StyleSheet.create({
   buttonText: {
     fontSize: 15,
     textAlign: "center",
+    // color: "white",
   },
   buttonTextPrimary: {
     fontSize: 24,

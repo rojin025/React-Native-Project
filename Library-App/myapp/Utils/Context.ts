@@ -1,5 +1,5 @@
 import { createContext } from "react";
-import { AuthorI, BookI, CatalogI, PublisherI } from "../Types/Types";
+import { AuthorI, BookI, CatalogI, MemberI, PublisherI } from "../Types/Types";
 
 interface ContextType {
   setLoggedIn: (value: boolean) => void;
@@ -11,6 +11,8 @@ interface ContextType {
   setPublishers: (publishers: PublisherI[]) => void;
   catalogs: CatalogI[];
   setCatalogs: (catalogs: CatalogI[]) => void;
+  members: MemberI[];
+  setMembers: (members: MemberI[]) => void;
 }
 
 const initialContext = {
@@ -23,6 +25,8 @@ const initialContext = {
   setAuthors: () => {},
   publishers: [],
   setPublishers: () => {},
+  members: [],
+  setMembers: () => {},
 };
 
 const GlobalContext = createContext<ContextType>(initialContext);

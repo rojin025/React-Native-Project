@@ -2,36 +2,35 @@ import { FlatList, Pressable, SafeAreaView, Text, View } from "react-native";
 
 import Styles from "../Styles";
 import { useContext, useEffect, useState } from "react";
-import { AuthorI } from "../../Types/Types";
 
 import GlobalContext from "../../Utils/Context";
-import Publisher from "./Publisher";
+import Member from "./Member";
 
-function PublisherListScreen({ navigation }: any) {
-  const { publishers, setPublishers } = useContext(GlobalContext);
+function MemberListScreen({ navigation }: any) {
+  const { members, setMembers } = useContext(GlobalContext);
 
   return (
     <SafeAreaView style={Styles.container}>
       <View>
-        <Text style={Styles.headerText}>Publishers</Text>
+        <Text style={Styles.headerText}>Members</Text>
       </View>
       <FlatList
-        data={publishers}
+        data={members}
         renderItem={({ item, index }) => (
-          <Publisher publisherData={item} index={index} />
+          <Member memberData={item} index={index} />
         )}
         keyExtractor={(item) => item.id}
       />
       <Pressable
         style={Styles.button}
         onPress={() => {
-          navigation.navigate("add-publisher");
+          navigation.navigate("add-member");
         }}
       >
-        <Text style={Styles.buttonText}>Add Publisher</Text>
+        <Text style={Styles.buttonTextPrimary}>Add Member</Text>
       </Pressable>
     </SafeAreaView>
   );
 }
 
-export default PublisherListScreen;
+export default MemberListScreen;

@@ -7,7 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { LOCAL_STORAGE_KEY } from "./Components/constants";
-import { AuthorI, BookI, CatalogI, PublisherI } from "./Types/Types";
+import { AuthorI, BookI, CatalogI, MemberI, PublisherI } from "./Types/Types";
 import Home from "./Components/Home";
 import About from "./Components/AboutScreen";
 import Login from "./Components/LoginScreen";
@@ -18,6 +18,7 @@ import { getBooks } from "./Services/book.api";
 import { getAuthors } from "./Services/author.api";
 import { getPublishers } from "./Services/publisher.api";
 import { getCatalogs } from "./Services/catalogs.api";
+import { getEntities } from "./Services/service.api";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -25,6 +26,7 @@ export default function App() {
   const [catalogs, setCatalogs] = useState<CatalogI[]>([]);
   const [authors, setAuthors] = useState<AuthorI[]>([]);
   const [publishers, setPublishers] = useState<PublisherI[]>([]);
+  const [members, setMembers] = useState<MemberI[]>([]);
 
   const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -68,12 +70,22 @@ export default function App() {
     const loadPublishers = async () => {
       try {
         setPublishers(await getPublishers());
-        console.log("Loading Pub", publishers);
+        // console.log("Loading Pub", publishers);
       } catch (error) {
         console.log("Error Loading Publishers: ", error);
       }
     };
     loadPublishers();
+
+    const loadMembers = async () => {
+      try {
+        setMembers(await getEntities("members"));
+        // console.log("Loaded Members: ", members);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadMembers();
   }, []);
 
   if (!loggedIn) {
@@ -92,6 +104,8 @@ export default function App() {
         setAuthors,
         publishers,
         setPublishers,
+        members,
+        setMembers,
       }}
     >
       <NavigationContainer>

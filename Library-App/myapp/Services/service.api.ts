@@ -1,7 +1,5 @@
 import axios from "axios";
 
-import { BookI } from "../Types/Types";
-
 axios.defaults.baseURL = "http://localhost:9000/";
 
 export async function getEntities(entities: string) {
@@ -14,10 +12,9 @@ export async function getEntities(entities: string) {
   return [];
 }
 
-export async function createEntitie(entitie: any) {
+export async function createEntitie(entitieName: string, entitie: any) {
   try {
-    // console.log("API entitie  ", entitie );
-    const res = await axios.post(`${entitie}s`, entitie);
+    const res = await axios.post(`${entitieName}s`, entitie);
     if (res.status === 201) {
       return res.data;
     }
