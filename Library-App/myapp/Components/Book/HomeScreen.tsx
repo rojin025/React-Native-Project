@@ -37,7 +37,7 @@ export default function HomeScreen({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text style={Styles.title}>Books</Text>
+        <Text style={Styles.headerText}>Books</Text>
         <TextInput
           style={Styles.input}
           placeholder="Live Serach"
@@ -51,22 +51,26 @@ export default function HomeScreen({ navigation }: any) {
         renderItem={({ item, index }) => <Book data={item} index={index} />}
         keyExtractor={(item) => item.id!}
       />
-      <ScrollView horizontal>
-        <View style={styles.horizontalContainer}>
-          <Pressable
-            style={styles.horizontalContainerButton}
-            onPress={() => navigation.navigate("author-list")}
-          >
-            <Text style={styles.horizontalContainerButtonText}>Authors</Text>
-          </Pressable>
-          <Pressable
-            style={styles.horizontalContainerButton}
-            onPress={() => navigation.navigate("publisher-list")}
-          >
-            <Text style={styles.horizontalContainerButtonText}>Publishers</Text>
-          </Pressable>
-        </View>
-      </ScrollView>
+      <View style={styles.bottomContainer}>
+        <ScrollView horizontal>
+          <View style={styles.horizontalContainer}>
+            <Pressable
+              style={styles.horizontalContainerButton}
+              onPress={() => navigation.navigate("author-list")}
+            >
+              <Text style={styles.horizontalContainerButtonText}>Authors</Text>
+            </Pressable>
+            <Pressable
+              style={styles.horizontalContainerButton}
+              onPress={() => navigation.navigate("publisher-list")}
+            >
+              <Text style={styles.horizontalContainerButtonText}>
+                Publishers
+              </Text>
+            </Pressable>
+          </View>
+        </ScrollView>
+      </View>
     </SafeAreaView>
   );
 }
@@ -78,11 +82,20 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? 30 : 0,
     paddingBottom: 200,
   },
+  bottomContainer: {
+    position: "absolute",
+    bottom: 0,
+    width: "100%",
+  },
   horizontalContainer: {
+    justifyContent: "center",
     flexDirection: "row",
+    height: 60,
   },
 
   horizontalContainerButtonText: {
+    // maxHeight: 20,
+
     fontSize: 15,
     paddingBottom: 6,
     textAlign: "center",
@@ -90,12 +103,19 @@ const styles = StyleSheet.create({
   },
 
   horizontalContainerButton: {
+    height: 40,
+    justifyContent: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: "lightblue",
+    backgroundColor: "lightgray",
     borderRadius: 10,
     marginVertical: 10,
     marginHorizontal: 20,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.4,
+    shadowRadius: 4,
+    elevation: 5, // For Android shadow
   },
   input: {
     padding: 10,
