@@ -39,7 +39,7 @@ export interface MemberI {
   email: string;
 }
 
-export interface transactions {
+export interface TransactionI {
   id: string;
   bookId: string;
   memberId: string;

@@ -14,6 +14,7 @@ export async function getEntities(entities: string) {
 
 export async function createEntitie(entitieName: string, entitie: any) {
   try {
+    console.log("Api create: ", entitie);
     const res = await axios.post(`${entitieName}s`, entitie);
     if (res.status === 201) {
       return res.data;

@@ -8,6 +8,7 @@ import GlobalContext from "../../Utils/Context";
 
 import { AntDesign } from "@expo/vector-icons";
 import { Picker } from "@react-native-picker/picker";
+import { createEntitie, updateEntitie } from "../../Services/service.api";
 
 const initailTransaction = {
   id: "",
@@ -18,8 +19,9 @@ const initailTransaction = {
 };
 
 export default function BookDetailsScreen({ route, navigation }: any) {
+  const { catalogs, setCatalogs, members, transactions, setTransactions } =
+    useContext(GlobalContext);
   const { title, id, genre, category, authorIDs, publisherId } = route.params;
-  const { catalogs, setCatalogs, members } = useContext(GlobalContext);
   const [catalog, setCatalog] = useState<CatalogI | null>(null);
   const [seletedMemberId, setSeletedMemberId] = useState("");
   const [transaction, setTransaction] = useState(initailTransaction);
@@ -45,19 +47,7 @@ export default function BookDetailsScreen({ route, navigation }: any) {
     return `${year}-${month}-${day}`;
   };
 
-  const handleBookTransaction = async (bookTransactionNum: number) => {
-    if (bookTransactionNum !== 1 && bookTransactionNum !== -1) {
-      return alert("Invalid operation.");
-    }
-    if (
-      !catalog ||
-      (bookTransactionNum === -1 && catalog.availableCopies === 0) ||
-      (bookTransactionNum === 1 &&
-        catalog.availableCopies === catalog.numberOfCopies)
-    ) {
-      return alert("Cannot perform this transaction!");
-    }
-
+  const recordBookTransaction = async (bookTransactionNum: number) => {
     setTransaction((prevTransaction) => ({
       ...prevTransaction,
       id: Date.now().toString(),
@@ -70,14 +60,60 @@ export default function BookDetailsScreen({ route, navigation }: any) {
         ...prevTransaction,
         returnedDate: calculateCurrentDate(),
       }));
+      try {
+        const data = await createEntitie("transaction", transaction);
+        if (data) {
+          setTransactions([...transactions, data]);
+          navigation.goBack();
+        } else {
+        }
+      } catch (error) {
+        throw error;
+      }
     } else {
       setTransaction((prevTransaction) => ({
         ...prevTransaction,
         borrowedDate: calculateCurrentDate(),
       }));
+      const data = await updateEntitie(
+        "transaction",
+        transaction.id,
+        transaction
+      );
+      if (data) {
+        const index = transactions.findIndex(
+          (current) => current.id === transaction.id
+        );
+        if (index !== -1) {
+          const updatedTransactions = [...transactions];
+          updatedTransactions[index] = data;
+          setTransactions([]);
+          setTransactions(updatedTransactions);
+          navigation.goBack();
+        }
+      }
     }
 
     console.log("New Transaction Record: ", transaction);
+  };
+
+  const handleBookTransaction = async (bookTransactionNum: number) => {
+    if (bookTransactionNum !== 1 && bookTransactionNum !== -1) {
+      return alert("Invalid operation.");
+    }
+    if (
+      !catalog ||
+      (bookTransactionNum === -1 && catalog.availableCopies === 0) ||
+      (bookTransactionNum === 1 &&
+        catalog.availableCopies === catalog.numberOfCopies)
+    ) {
+      return alert("Cannot perform this transaction!");
+    }
+    try {
+      const res = await recordBookTransaction(bookTransactionNum);
+    } catch (error) {
+      console.log(error);
+    }
 
     const updatedCatalog = {
       ...catalog,

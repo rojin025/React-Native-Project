@@ -7,11 +7,18 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
 import { LOCAL_STORAGE_KEY } from "./Components/constants";
-import { AuthorI, BookI, CatalogI, MemberI, PublisherI } from "./Types/Types";
+import {
+  AuthorI,
+  BookI,
+  CatalogI,
+  MemberI,
+  PublisherI,
+  TransactionI,
+} from "./Types/Types";
 import Home from "./Components/Home";
 import About from "./Components/AboutScreen";
 import Login from "./Components/LoginScreen";
-import AboutScreen from "./Components/UserScreen";
+import AboutScreen from "./Components/ProcessScreen";
 
 import GlobalContext from "./Utils/Context";
 import { getBooks } from "./Services/book.api";
@@ -19,6 +26,8 @@ import { getAuthors } from "./Services/author.api";
 import { getPublishers } from "./Services/publisher.api";
 import { getCatalogs } from "./Services/catalogs.api";
 import { getEntities } from "./Services/service.api";
+import Process from "./Components/ProcessScreen";
+import ProcessScreen from "./Components/ProcessScreen";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
@@ -27,6 +36,7 @@ export default function App() {
   const [authors, setAuthors] = useState<AuthorI[]>([]);
   const [publishers, setPublishers] = useState<PublisherI[]>([]);
   const [members, setMembers] = useState<MemberI[]>([]);
+  const [transactions, setTransactions] = useState<TransactionI[]>([]);
 
   const { Navigator, Screen } = createBottomTabNavigator();
 
@@ -86,6 +96,16 @@ export default function App() {
       }
     };
     loadMembers();
+
+    const loadTransaction = async () => {
+      try {
+        setTransactions(await getEntities("transactions"));
+        // console.log("Loaded Members: ", members);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    loadTransaction();
   }, []);
 
   if (!loggedIn) {
@@ -106,6 +126,8 @@ export default function App() {
         setPublishers,
         members,
         setMembers,
+        transactions,
+        setTransactions,
       }}
     >
       <NavigationContainer>
@@ -122,7 +144,7 @@ export default function App() {
           />
           <Screen
             name="Process"
-            component={AboutScreen}
+            component={ProcessScreen}
             options={{
               tabBarIcon: ({ color }) => (
                 <MaterialCommunityIcons
