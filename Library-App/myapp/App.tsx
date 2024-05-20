@@ -20,7 +20,7 @@ import { getPublishers } from "./Services/publisher.api";
 import { getCatalogs } from "./Services/catalogs.api";
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [books, setBooks] = useState<BookI[]>([]);
   const [catalogs, setCatalogs] = useState<CatalogI[]>([]);
   const [authors, setAuthors] = useState<AuthorI[]>([]);
@@ -36,7 +36,7 @@ export default function App() {
         setLoggedIn(user.loggedIn);
       }
     };
-    // checkIsLoggedIn();
+    checkIsLoggedIn();
 
     const loadBooks = async () => {
       try {

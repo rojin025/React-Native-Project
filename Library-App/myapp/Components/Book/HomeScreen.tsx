@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     paddingBottom: 6,
     textAlign: "center",
-    color: "white",
+    color: "#616060",
   },
 
   horizontalContainerButton: {
@@ -107,14 +107,14 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     paddingVertical: 10,
     paddingHorizontal: 20,
-    backgroundColor: "lightgray",
+    backgroundColor: "#E7E5E6",
     borderRadius: 10,
     marginVertical: 10,
     marginHorizontal: 20,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.4,
-    shadowRadius: 4,
+    shadowOpacity: 0.6,
+    shadowRadius: 5,
     elevation: 5, // For Android shadow
   },
   input: {
