@@ -1,8 +1,17 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 
-import { StyleSheet, View, Text, TouchableHighlight } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableHighlight,
+  Pressable,
+} from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
-import { BookI } from "../../Types/Types";
+import { BookI, CatalogI } from "../../Types/Types";
+import Styles from "../Styles";
+import GlobalContext from "../../Utils/Context";
+import { updateCatalog } from "../../Services/catalogs.api";
 
 interface props {
   data: BookI;
@@ -11,17 +20,85 @@ interface props {
 
 export default function BookDetailsScreen({ route }: props) {
   const { title, id, genre, category, authorIDs, publisherId } = route.params;
-
   const navigation = useNavigation();
+  const { catalogs, setCatalogs } = useContext(GlobalContext);
+  const [catalog, setCatalog] = useState<CatalogI | null>(null);
+
+  useEffect(() => {
+    console.log("ID -------", id);
+    console.log(catalogs);
+    const index = catalogs.findIndex((catalog) => catalog.bookId === id);
+    if (index !== -1) {
+      setCatalog(catalogs[index]);
+    }
+    // borrow BOoks
+    // - search catalog in catalogs Array
+    // - setCatalog
+    // -
+  }, [catalogs, id]);
+
+  const handleBorrow = async () => {
+    console.log("handle Books");
+
+    if (!catalog || catalog.availableCopies === 0) {
+      return alert("Cannot borrow this book now.");
+    }
+
+    const updatedCatalog = {
+      ...catalog,
+      availableCopies: catalog.availableCopies - 1,
+    };
+
+    const res = await updateCatalog(updatedCatalog.id, updatedCatalog);
+
+    if (res.status === 200) {
+      let index = catalogs.findIndex((catalog) => catalog.bookId === id);
+      if (index !== -1) {
+        const updatedCatalogs = [...catalogs];
+        updatedCatalogs[index] = updatedCatalog;
+        setCatalog(updatedCatalog);
+        setCatalogs(updatedCatalogs);
+      }
+    }
+  };
+
+  function BorrowAble() {
+    return (
+      <View>
+        <Text style={styles.name}>
+          Available Books: {catalog?.availableCopies}
+        </Text>
+        <Text style={styles.info}>
+          Numbers of Copies: {catalog?.numberOfCopies}
+        </Text>
+        <Pressable
+          style={[Styles.button, { backgroundColor: "green" }]}
+          onPress={handleBorrow}
+        >
+          <Text style={Styles.buttonTextPrimary}>Borrow</Text>
+        </Pressable>
+      </View>
+    );
+  }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.name}>{title}</Text>
-      <Text style={styles.info}>{id}</Text>
-      <Text style={styles.info}>{genre}</Text>
-      <Text style={styles.info}>{category}</Text>
-      <Text style={styles.info}>{authorIDs}</Text>
-      <Text style={styles.info}>{publisherId}</Text>
+    <View style={Styles.container}>
+      <View style={[Styles.container, { margin: 30 }]}>
+        <Text style={Styles.title}>{title}</Text>
+        <Text style={styles.name}>{id}</Text>
+        <Text style={styles.info}>{genre}</Text>
+        <Text style={styles.info}>{category}</Text>
+        <Text style={styles.info}>{authorIDs}</Text>
+        <Text style={styles.info}>{publisherId}</Text>
+      </View>
+      <View>
+        <Text style={Styles.title}>Brrow Books</Text>
+        {catalog ? (
+          <BorrowAble />
+        ) : (
+          <Text style={Styles.title}>So sorry no Books available :(</Text>
+        )}
+      </View>
     </View>
   );
 }
@@ -32,7 +109,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   name: {
-    fontSize: 24,
+    fontSize: 19,
     marginTop: 5,
   },
   info: {

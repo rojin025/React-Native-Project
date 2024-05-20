@@ -1,25 +1,28 @@
-import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet } from "react-native";
+
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 
-import { AuthorI, BookI, PublisherI } from "./Types/Types";
-import { getBooks } from "./Services/book.api";
-import GlobalContext from "./Utils/Context";
+import { LOCAL_STORAGE_KEY } from "./Components/constants";
+import { AuthorI, BookI, CatalogI, PublisherI } from "./Types/Types";
 import Home from "./Components/Home";
 import About from "./Components/AboutScreen";
+import Login from "./Components/LoginScreen";
+import AboutScreen from "./Components/UserScreen";
+
+import GlobalContext from "./Utils/Context";
+import { getBooks } from "./Services/book.api";
 import { getAuthors } from "./Services/author.api";
 import { getPublishers } from "./Services/publisher.api";
-import Login from "./Components/LoginScreen";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { LOCAL_STORAGE_KEY } from "./Components/constants";
-import AboutScreen from "./Components/UserScreen";
+import { getCatalogs } from "./Services/catalogs.api";
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [books, setBooks] = useState<BookI[]>([]);
+  const [catalogs, setCatalogs] = useState<CatalogI[]>([]);
   const [authors, setAuthors] = useState<AuthorI[]>([]);
   const [publishers, setPublishers] = useState<PublisherI[]>([]);
 
@@ -43,6 +46,15 @@ export default function App() {
       }
     };
     loadBooks();
+
+    const loadCatalogs = async () => {
+      try {
+        setCatalogs(await getCatalogs());
+      } catch (error) {
+        console.log("Error Loading Books: ", error);
+      }
+    };
+    loadCatalogs();
 
     const loadAuthors = async () => {
       try {
@@ -71,6 +83,8 @@ export default function App() {
   return (
     <GlobalContext.Provider
       value={{
+        catalogs,
+        setCatalogs,
         setLoggedIn,
         books,
         setBooks,

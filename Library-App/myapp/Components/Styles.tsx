@@ -17,7 +17,10 @@ const Styles = StyleSheet.create({
     borderBottomWidth: 1,
     borderColor: "#ddd",
   },
-
+  info: {
+    color: "grey",
+    marginBottom: 5,
+  },
   edges: {
     flex: 1,
     alignItems: "center",

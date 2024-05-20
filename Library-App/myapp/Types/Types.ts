@@ -21,3 +21,10 @@ export interface PublisherI {
   email: string;
   address: string;
 }
+
+export interface CatalogI {
+  id: string;
+  bookId: string;
+  numberOfCopies: number;
+  availableCopies: number;
+}
