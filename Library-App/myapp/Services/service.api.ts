@@ -24,12 +24,16 @@ export async function createEntitie(entitieName: string, entitie: any) {
   }
 }
 
-export async function updateEntitie(id: string, entitie: any) {
+export async function updateEntitie(
+  entitieName: string,
+  id: string,
+  entitie: any
+) {
   try {
     console.log("API ID ", id);
     console.log("API Book ", entitie);
 
-    const res = await axios.put(`${entitie}s/${id}`, entitie);
+    const res = await axios.put(`${entitieName}s/${id}`, entitie);
     if (res.status === 200) {
       return res.data;
     }
@@ -39,9 +43,9 @@ export async function updateEntitie(id: string, entitie: any) {
   }
 }
 
-export async function deleteEntitie(entitie: string, id: string) {
+export async function deleteEntitie(entitieName: string, id: string) {
   try {
-    const res = await axios.delete(`${entitie}s/${id}`);
+    const res = await axios.delete(`${entitieName}s/${id}`);
     if (res.status === 200) {
       console.log("Deleted");
       return true;
