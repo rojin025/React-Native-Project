@@ -1,11 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-
 import { StyleSheet, View, Text, Pressable } from "react-native";
-import { useNavigation, useRoute } from "@react-navigation/native";
-import { BookI, CatalogI } from "../../Types/Types";
+
+import { updateCatalog } from "../../Services/catalogs.api";
+import { CatalogI } from "../../Types/Types";
 import Styles from "../Styles";
 import GlobalContext from "../../Utils/Context";
-import { updateCatalog } from "../../Services/catalogs.api";
+
 import { AntDesign } from "@expo/vector-icons";
 
 export default function BookDetailsScreen({ route, navigation }: any) {
@@ -24,8 +24,12 @@ export default function BookDetailsScreen({ route, navigation }: any) {
     if (transaction !== 1 && transaction !== -1) {
       return alert("Invalid operation.");
     }
-    if (!catalog || (transaction === -1 && catalog.availableCopies === 0)) {
-      return alert("Cannot operate this book now.");
+    if (
+      !catalog ||
+      (transaction === -1 && catalog.availableCopies === 0) ||
+      (transaction === 1 && catalog.availableCopies === catalog.numberOfCopies)
+    ) {
+      return alert("Cannot perform this transaction!");
     }
 
     const updatedCatalog = {
@@ -46,7 +50,7 @@ export default function BookDetailsScreen({ route, navigation }: any) {
     }
   };
 
-  function BorrowAble() {
+  function BorrowAbleComponent() {
     return (
       <View>
         <Text style={Styles.title}>Brrow Books</Text>
@@ -97,7 +101,7 @@ export default function BookDetailsScreen({ route, navigation }: any) {
       <View>
         <BookDetails />
         {catalog ? (
-          <BorrowAble />
+          <BorrowAbleComponent />
         ) : (
           <Text style={Styles.title}>So sorry no Books available :(</Text>
         )}
