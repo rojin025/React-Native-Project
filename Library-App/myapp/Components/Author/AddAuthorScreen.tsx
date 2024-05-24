@@ -76,9 +76,13 @@ function AddAuthorScreen({ navigation }: any) {
         value={author.email}
         onChangeText={handleEmailChange}
       />
-      <Pressable style={Styles.button} onPress={handleAdd}>
-        <Text style={Styles.buttonText}>Add</Text>
-      </Pressable>
+      {isValidEmail ? (
+        <Pressable style={Styles.button} onPress={handleAdd}>
+          <Text style={Styles.buttonText}>Add</Text>
+        </Pressable>
+      ) : (
+        <Text>Invalid Email</Text>
+      )}
     </View>
   );
 }
