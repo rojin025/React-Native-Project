@@ -16,6 +16,7 @@ const initialAuthor = {
 function AddAuthorScreen({ navigation }: any) {
   const { authors, setAuthors } = useContext(GlobalContext);
   const [author, setAuthor] = useState(initialAuthor);
+  const [isValidEmail, setIsEmailVaild] = useState(true);
 
   const handleAdd = async () => {
     const index = authors.findIndex(
@@ -33,6 +34,14 @@ function AddAuthorScreen({ navigation }: any) {
       } catch (error) {}
     }
     console.log("Author unable to add:", author);
+  };
+
+  const isEmailValid = (email: string) => {
+    return email.endsWith(".com");
+  };
+  const handleEmailChange = (text: string) => {
+    setAuthor({ ...author, email: text });
+    setIsEmailVaild(isEmailValid(text));
   };
 
   return (
@@ -65,7 +74,7 @@ function AddAuthorScreen({ navigation }: any) {
         placeholder="Email:"
         style={Styles.input}
         value={author.email}
-        onChangeText={(text) => setAuthor((prev) => ({ ...prev, email: text }))}
+        onChangeText={handleEmailChange}
       />
       <Pressable style={Styles.button} onPress={handleAdd}>
         <Text style={Styles.buttonText}>Add</Text>
