@@ -9,6 +9,7 @@ import Styles from "../Styles";
 function UpdateAuthorScreen({ navigation, route }: any) {
   const [author, setAuthor] = useState(route.params);
   const { authors, setAuthors } = useContext(GlobalContext);
+  const [isValidEmail, setIsEmailVaild] = useState(true);
 
   const handleUpdate = async () => {
     console.log("Update:", author);
@@ -29,6 +30,14 @@ function UpdateAuthorScreen({ navigation, route }: any) {
     } catch (error) {
       console.error("Error updating Author:", error);
     }
+  };
+
+  const isEmailValid = (email: string) => {
+    return email.endsWith(".com");
+  };
+  const handleEmailChange = (text: string) => {
+    setAuthor({ ...author, email: text });
+    setIsEmailVaild(isEmailValid(text));
   };
 
   return (
@@ -57,11 +66,15 @@ function UpdateAuthorScreen({ navigation, route }: any) {
         placeholder="Email:"
         style={Styles.input}
         value={author.email}
-        onChangeText={(text) => setAuthor({ ...author, email: text })}
+        onChangeText={handleEmailChange}
       />
-      <Pressable style={Styles.button} onPress={handleUpdate}>
-        <Text style={Styles.buttonTextPrimary}>Update</Text>
-      </Pressable>
+      {isValidEmail ? (
+        <Pressable style={Styles.button} onPress={handleUpdate}>
+          <Text style={Styles.buttonTextPrimary}>Update</Text>
+        </Pressable>
+      ) : (
+        <Text>Invalid Email</Text>
+      )}
     </View>
   );
 }
