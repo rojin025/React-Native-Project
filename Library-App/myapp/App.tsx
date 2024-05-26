@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { StyleSheet } from "react-native";
 
+import "react-native-gesture-handler";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -29,6 +32,8 @@ import { getEntities } from "./Services/service.api";
 import Process from "./Components/ProcessScreen";
 import ProcessScreen from "./Components/ProcessScreen";
 
+const Drawer = createDrawerNavigator();
+
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [books, setBooks] = useState<BookI[]>([]);
@@ -38,7 +43,7 @@ export default function App() {
   const [members, setMembers] = useState<MemberI[]>([]);
   const [transactions, setTransactions] = useState<TransactionI[]>([]);
 
-  const { Navigator, Screen } = createBottomTabNavigator();
+  const { Navigator, Screen } = createDrawerNavigator();
 
   useEffect(() => {
     const checkIsLoggedIn = async () => {
@@ -131,43 +136,16 @@ export default function App() {
       }}
     >
       <NavigationContainer>
-        <Navigator screenOptions={{ headerShown: false }}>
+        <Navigator initialRouteName="Process">
           <Screen
             name="Books"
             component={Home}
             options={{
               title: "Books",
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons name="book" color={color} size={24} />
-              ),
             }}
           />
-          <Screen
-            name="Process"
-            component={ProcessScreen}
-            options={{
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons
-                  name="barcode-scan"
-                  color={color}
-                  size={24}
-                />
-              ),
-            }}
-          />
-          <Screen
-            name="User"
-            component={About}
-            options={{
-              tabBarIcon: ({ color }) => (
-                <MaterialCommunityIcons
-                  name="cog-outline"
-                  color={color}
-                  size={24}
-                />
-              ),
-            }}
-          />
+          <Screen name="Process" component={ProcessScreen} />
+          <Screen name="User" component={About} />
         </Navigator>
       </NavigationContainer>
     </GlobalContext.Provider>

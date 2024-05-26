@@ -86,14 +86,14 @@ function Home() {
           headerShown: true,
         }}
       />
-      <Screen
+      {/* <Screen
         name="author-details"
         component={AuthorDetailsScreen}
         options={{
           title: "Author Detials",
           headerShown: true,
         }}
-      />
+      /> */}
     </Navigator>
   );
 }
