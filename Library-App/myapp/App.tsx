@@ -145,7 +145,7 @@ export default function App() {
             }}
           />
           <Screen name="Process" component={ProcessScreen} />
-          <Screen name="User" component={About} />
+          <Screen name="Settings" component={About} />
         </Navigator>
       </NavigationContainer>
     </GlobalContext.Provider>

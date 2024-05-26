@@ -37,7 +37,6 @@ export default function HomeScreen({ navigation }: any) {
   return (
     <SafeAreaView style={styles.container}>
       <View>
-        <Text style={Styles.headerText}>Books</Text>
         <TextInput
           style={Styles.input}
           placeholder="Live Serach"
