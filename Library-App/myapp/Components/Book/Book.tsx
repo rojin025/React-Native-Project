@@ -8,6 +8,12 @@ import { deleteBook } from "../../Services/book.api";
 import GlobalContext from "../../Utils/Context";
 import showConfirmation from "../../Utils/Confirmation";
 
+import { MaterialIcons } from "@expo/vector-icons";
+
+import { IconButton } from "@mui/material";
+import DeleteIcon from "@mui/icons-material/Delete";
+import Stack from "@mui/material/Stack";
+
 interface props {
   data: BookI;
   index: number;
@@ -58,7 +64,14 @@ function Book({ data, index }: props) {
         </View>
 
         <View style={styles.edges}>
-          <TouchableHighlight
+          <MaterialIcons
+            onPress={askDeleteConfirmation}
+            name="delete"
+            size={24}
+            color="black"
+          />
+
+          {/* <TouchableHighlight
             onPress={handleNavToBookDetails}
             style={styles.button}
             underlayColor="#5398DC"
@@ -70,15 +83,16 @@ function Book({ data, index }: props) {
             style={styles.deleteButton}
             underlayColor="red"
           >
-            <Text style={styles.buttonText}>Delete</Text>
+            {" "}
           </TouchableHighlight>
+
           <TouchableHighlight
             onPress={handleEdit}
             style={styles.button}
             underlayColor="Green"
           >
             <Text style={styles.buttonText}> Edit </Text>
-          </TouchableHighlight>
+          </TouchableHighlight> */}
         </View>
       </View>
     </View>
