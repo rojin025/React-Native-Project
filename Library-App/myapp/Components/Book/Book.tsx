@@ -9,10 +9,12 @@ import GlobalContext from "../../Utils/Context";
 import showConfirmation from "../../Utils/Confirmation";
 
 import { MaterialIcons } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 
 import { IconButton } from "@mui/material";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Stack from "@mui/material/Stack";
+import { light } from "@mui/material/styles/createPalette";
 
 interface props {
   data: BookI;
@@ -57,42 +59,31 @@ function Book({ data, index }: props) {
     <View style={{ backgroundColor: index % 2 === 0 ? "white" : "lightgrey" }}>
       <View style={styles.row}>
         <View style={styles.course}>
-          <Text>{title}</Text>
-          <Text style={styles.faculty}>
-            {genre} - {category}
-          </Text>
+          <Text style={styles.title}>{title}</Text>
+          <Text style={styles.faculty}>{genre}</Text>
+          <Text style={styles.faculty}>{category}</Text>
         </View>
 
         <View style={styles.edges}>
+          <Feather
+            name="info"
+            size={24}
+            color="black"
+            onPress={handleNavToBookDetails}
+          />
           <MaterialIcons
             onPress={askDeleteConfirmation}
             name="delete"
+            style={styles.buttonIcon}
             size={24}
             color="black"
           />
-
-          {/* <TouchableHighlight
-            onPress={handleNavToBookDetails}
-            style={styles.button}
-            underlayColor="#5398DC"
-          >
-            <Text style={styles.buttonText}>Details</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            onPress={askDeleteConfirmation}
-            style={styles.deleteButton}
-            underlayColor="red"
-          >
-            {" "}
-          </TouchableHighlight>
-
-          <TouchableHighlight
+          <MaterialIcons
+            name="edit"
+            size={24}
+            color="black"
             onPress={handleEdit}
-            style={styles.button}
-            underlayColor="Green"
-          >
-            <Text style={styles.buttonText}> Edit </Text>
-          </TouchableHighlight> */}
+          />
         </View>
       </View>
     </View>
@@ -110,8 +101,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    padding: 5,
-    minWidth: 50,
+    minWidth: 40,
   },
   stars: {
     flex: 1,
@@ -125,8 +115,16 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 8,
   },
+  title: {
+    fontSize: 20,
+    textDecorationLine: "underline",
+    textDecorationColor: "grey",
+  },
   faculty: {
     color: "grey",
+  },
+  buttonIcon: {
+    padding: 4,
   },
   button: {
     borderWidth: 1,
